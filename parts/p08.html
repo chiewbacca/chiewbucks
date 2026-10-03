@@ -1,0 +1,49 @@
+timerFill.style.transform = "scaleX(1)";
+  fitCanvas();
+  cupX = gw / 2; targetX = cupX;
+  running = true;
+  canvas.style.touchAction = "none";
+  overlay.classList.add("hide");
+  cancelAnimationFrame(raf);
+  raf = requestAnimationFrame(loop);
+}
+function endRound() {
+  running = false;
+  canvas.style.touchAction = "pan-y";
+  cancelAnimationFrame(raf);
+  if (score > best) {
+    best = score;
+    document.getElementById("gBest").textContent = String(best);
+    try { localStorage.setItem("cb-best", String(best)); } catch (err) {}
+  }
+  const stars = score > 0 ? Math.max(1, Math.round(score / 2)) : 0;
+  if (!awarded) {
+    awarded = true;
+    if (stars) addRewardStars(stars);
+  }
+  gameTitle.textContent = score ? "Nice catch!" : "So close!";
+  gameBlurb.textContent = score
+    ? "You scored " + score + " and poured " + stars + " mock stars into Rewards."
+    : "The beans got away. Give the cup another swoop!";
+  gameStart.textContent = "Play again";
+  overlay.classList.remove("hide");
+  if (score) burstConfetti(true, window.innerWidth / 2, window.innerHeight * 0.55);
+  drawScene();
+}
+gameStart.addEventListener("click", startRound);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { closeModal(); closeCart(); }
+  if (!running) return;
+  if (e.key === "ArrowLeft") { targetX = Math.max(46, targetX - 42); e.preventDefault(); }
+  if (e.key === "ArrowRight") { targetX = Math.min(gw - 46, targetX + 42); e.preventDefault(); }
+});
+new ResizeObserver(() => { fitCanvas(); if (!running) drawScene(); }).observe(document.getElementById("gameFrame"));
+fitCanvas();
+drawScene();
+
+renderMenu();
+renderCart();
+loadImgs();
+</script>
+</body>
+</html>
