@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#ff2d8a" />
+<meta name="description" content="Slime Pop Studio by Emily — kids’ birthday slime workshops around Christchurch. Mock demo site." />
+<title>Slime Pop Studio by Emily — Christchurch slime parties</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#2a1038;
+  --pink:#ff2d8a;
+  --pink-deep:#e01270;
+  --grape:#7a2bff;
+  --lime:#c8ff3d;
+  --aqua:#3ad7ff;
+  --sun:#ffe14a;
+  --cream:#fff6fb;
+  --card:#ffffff;
+  --muted:#6b4d78;
+  --shadow:0 18px 50px rgba(80,10,70,.16);
+  --radius:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:"Nunito",system-ui,sans-serif;
+  background:
+    radial-gradient(900px 500px at -10% -10%, #ffd0ea 0%, transparent 55%),
+    radial-gradient(800px 480px at 110% 0%, #d9c6ff 0%, transparent 50%),
+    radial-gradient(700px 500px at 50% 120%, #d8fff2 0%, transparent 45%),
+    var(--cream);
+  overflow-x:hidden;
+}
+img{max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+.wrap{width:min(1120px, calc(100% - 32px)); margin-inline:auto}
+
+/* nav */
+.nav{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:12px 16px;
+  background:rgba(255,246,251,.78);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,45,138,.12);
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; font-family:"Baloo 2",cursive; font-weight:800; font-size:1.15rem}
+.logo{
+  width:42px; height:42px; border-radius:50%;
+  background:conic-gradient(from 120deg, var(--pink), var(--sun), var(--lime), var(--aqua), var(--grape), var(--pink));
+  display:grid; place-items:center;
+  box-shadow:0 8px 0 #2a1038;
+  animation:wobble 3.4s ease-in-out infinite;
+}
+.logo span{width:22px; height:18px; border-radius:40% 40% 46% 46%; background:#fff; display:block; position:relative}
+.logo span:before,.logo span:after{content:""; position:absolute; width:5px; height:5px; background:#2a1038; border-radius:50%; top:5px}
+.logo span:before{left:4px} .logo span:after{right:4px}
+.nav-links{display:flex; gap:16px; align-items:center}
+.nav-links a{text-decoration:none; font-weight:800; font-size:.92rem}
+.nav-links a:hover{color:var(--pink-deep)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:0; cursor:pointer; text-decoration:none;
+  background:var(--ink); color:#fff;
+  border-radius:999px; padding:14px 22px;
+  font-weight:800; letter-spacing:.01em;
+  box-shadow:0 8px 0 #140818;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(6px); box-shadow:0 2px 0 #140818}
+.btn.pink{background:linear-gradient(180deg,#ff5aa6,var(--pink)); color:#fff}
+.btn.lime{background:var(--lime); color:var(--ink)}
+.btn.ghost{background:#fff; color:var(--ink); box-shadow:0 8px 0 #f3c3dc}
+.menu-btn{display:none; border:0; background:#fff; border-radius:14px; padding:10px 12px; font-weight:800; box-shadow:0 4px 0 #f3c3dc}
+
+/* hero */
+.hero{position:relative; padding:28px 0 20px}
+.hero-grid{display:grid; gap:28px; align-items:center}
+.kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#fff; border-radius:999px; padding:6px 12px 6px 6px;
+  font-weight:800; font-size:.85rem; box-shadow:var(--shadow);
+}
+.dot{width:28px; height:28px; border-radius:50%; background:var(--lime); display:grid; place-items:center; animation:pulse 1.6s ease infinite}
+h1{
+  font-family:"Baloo 2",cursive; font-weight:800;
+  font-size:clamp(3rem, 10vw, 6.4rem);
+  line-height:.88; margin:.35em 0 .2em; letter-spacing:-.03em;
+}
+h1 .goo{
+  display:inline-block;
+  background:linear-gradient(100deg, var(--pink), var(--grape) 40%, var(--aqua) 75%, var(--pink));
+  background-size:200% 100%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:shimmer 5s linear infinite;
+  filter:drop-shadow(0 10px 0 rgba(255,45,138,.15));
+}
+.lede{font-size:1.15rem; color:var(--muted); max-width:38ch; font-weight:700}
+.cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+.meta-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+.pill{background:#fff; border-radius:999px; padding:8px 12px; font-weight:800; font-size:.85rem; box-shadow:0 6px 0 rgba(42,16,56,.06)}
+
+.stage{
+  position:relative; min-height:420px;
+  display:grid; place-items:center;
+}
+.vat{
+  width:min(340px, 86vw); aspect-ratio:1;
+  border-radius:46% 54% 48% 52% / 42% 46% 54% 58%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), transparent 28%),
+    linear-gradient(160deg, #ff4fa0, #ff2d8a 40%, #b14bff 78%);
+  box-shadow:inset 0 -30px 40px rgba(80,0,60,.25), 0 30px 0 rgba(42,16,56,.08), var(--shadow);
+  animation:morph 7s ease-in-out infinite;
+  position:relative;
+  filter:url(#goo);
+}
+.blob{
+  position:absolute; border-radius:50%;
+  filter:url(#goo);
+  animation:float 6s ease-in-out infinite;
+}
+.b1{width:120px; height:110px; background:#c8ff3d; left:6%; top:18%; animation-delay:-1s}
+.b2{width:90px; height:90px; background:#3ad7ff; right:4%; top:28%; animation-delay:-2.2s}
+.b3{width:70px; height:78px; background:#ffe14a; left:18%; bottom:10%; animation-delay:-.6s}
+.b4{width:64px; height:64px; background:#7a2bff; right:16%; bottom:16%; animation-delay:-3s}
+.face{position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:2}
+.eyes{display:flex; gap:36px}
+.eye{width:22px; height:26px; background:#2a1038; border-radius:50%; position:relative; animation:blink 4.5s infinite}
+.eye:after{content:""; position:absolute; width:7px; height:7px; background:#fff; border-radius:50%; top:5px; left:5px}
+.smile{width:54px; height:22px; border:5px solid #2a1038; border-top:0; border-radius:0 0 40px 40px; margin:10px auto 0}
+.drip{
+  position:absolute; top:-8px; left:50%; width:18px; height:70px; margin-left:-9px;
+  background:linear-gradient(#ff7ab8, #ff2d8a);
+  border-radius:0 0 20px 20px;
+  animation:drip 2.8s ease-in-out infinite;
+  filter:url(#goo);
+}
+
+.marquee{
+  margin:10px 0 0; overflow:hidden;
+  background:var(--ink); color:#fff;
+  transform:rotate(-1.2deg);
+}
+.marquee-track{display:flex; gap:28px; width:max-content; animation:slide 18s linear infinite; padding:12px 0; font-family:"Baloo 2",cursive; font-size:1.2rem}
+.marquee b{color:var(--lime)}
+
+section{padding:64px 0}
+h2{font-family:"Baloo 2",cursive; font-size:clamp(2rem,5vw,3.2rem); line-height:1; margin:0 0 8px}
+.sub{color:var(--muted); font-weight:700; margin:0 0 22px; max-width:52ch}
+
+.steps{display:grid; gap:14px}
+.step{
+  background:#fff; border-radius:var(--radius); padding:18px 18px 18px 18px;
+  box-shadow:var(--shadow); display:grid; grid-template-columns:64px 1fr; gap:12px; align-items:center;
+  transform:translateY(16px); opacity:0; animation:rise .7s ease forwards;
+}
+.step:nth-child(2){animation-delay:.1s}
+.step:nth-child(3){animation-delay:.2s}
+.step:nth-child(4){animation-delay:.3s}
+.num{
+  width:64px; height:64px; border-radius:22px;
+  display:grid; place-items:center;
+  font-family:"Baloo 2",cursive; font-size:1.7rem;
+  background:var(--lime); box-shadow:0 6px 0 #9ed41a;
+}
+.step h3{margin:0 0 4px; font-size:1.15rem}
+.step p{margin:0; color:var(--muted); font-weight:700}
+
+.packs{display:grid; gap:16px}
+.pack{
+  background:#fff; border-radius:32px; padding:22px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.pack.pop{background:linear-gradient(180deg,#fff, #fff5fb); outline:3px solid var(--pink)}
+.ribbon{
+  position:absolute; top:16px; right:-36px; transform:rotate(28deg);
+  background:var(--pink); color:#fff; font-weight:800; font-size:.75rem;
+  padding:6px 42px;
+}
+.price{font-family:"Baloo 2",cursive; font-size:2.6rem; margin:6px 0}
+.price span{font-size:1rem; color:var(--muted)}
+.pack ul{margin:0 0 16px; padding:0; list-style:none}
+.pack li{padding:6px 0 6px 26px; position:relative; font-weight:700}
+.pack li:before{content:"●"; position:absolute; left:0; color:var(--pink)}
+.pack .who{font-weight:800; color:var(--grape)}
+
+.gallery{display:grid; gap:16px}
+.swatches{display:flex; flex-wrap:wrap; gap:10px}
+.swatch{
+  width:54px; height:54px; border-radius:50%; border:3px solid #fff;
+  box-shadow:0 6px 0 rgba(42,16,56,.15); cursor:pointer;
+  transition:transform .15s ease;
+}
+.swatch.on{outline:3px solid var(--ink); transform:scale(1.08)}
+.lab{
+  background:#fff; border-radius:32px; padding:18px; box-shadow:var(--shadow);
+  display:grid; gap:14px;
+}
+.bowl-wrap{display:grid; place-items:center; min-height:220px; position:relative}
+.bowl{
+  width:180px; height:140px; border-radius:20px 20px 90px 90px;
+  background:#f4e7f1; box-shadow:inset 0 -20px 0 rgba(42,16,56,.05), 0 16px 0 rgba(42,16,56,.06);
+  overflow:hidden; position:relative;
+}
+.mix{
+  position:absolute; left:-10%; right:-10%; bottom:-20%; height:80%;
+  border-radius:40% 40% 0 0;
+  background:#ffd0e6;
+  transform-origin:50% 80%;
+  transition:background .35s ease;
+  animation:stir 1.2s ease;
+}
+.mix.spin{animation:stir .7s ease}
+.lab-actions{display:flex; gap:10px; flex-wrap:wrap}
+.hint{font-weight:800; color:var(--muted); min-height:1.4em}
+
+.bubbles{
+  position:relative; height:280px; border-radius:32px; overflow:hidden;
+  background:linear-gradient(180deg,#7a2bff,#ff2d8a);
+  box-shadow:var(--shadow);
+}
+.bubbles h3{position:relative; z-index:2; color:#fff; margin:16px 16px 0; font-family:"Baloo 2",cursive}
+.score{position:absolute; top:16px; right:16px; z-index:2; background:#fff; border-radius:999px; padding:6px 12px; font-weight:800}
+.bubble{
+  position:absolute; border-radius:50%; cursor:pointer;
+  background:radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.15) 42%, rgba(255,255,255,.05));
+  border:2px solid rgba(255,255,255,.7);
+  animation:risebub linear infinite;
+}
+.bubble.popped{animation:pop .25s ease forwards}
+
+.about{
+  display:grid; gap:16px;
+}
+.emily-card{
+  background:#fff; border-radius:36px; padding:22px; box-shadow:var(--shadow);
+  display:grid; gap:12px;
+}
+.avatar{
+  width:120px; height:120px; border-radius:40% 60% 50% 50%;
+  background:linear-gradient(160deg, var(--sun), var(--pink));
+  display:grid; place-items:center;
+  box-shadow:0 12px 0 #f0b423;
+  animation:wobble 4s ease-in-out infinite;
+  font-size:3rem;
+}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{background:#fff; border-radius:999px; padding:8px 12px; font-weight:800; box-shadow:0 5px 0 #ead3f0}
+
+form.book{
+  background:#fff; border-radius:32px; padding:18px; box-shadow:var(--shadow);
+  display:grid; gap:12px;
+}
+label{font-weight:800; font-size:.9rem; display:grid; gap:6px}
+input,select,textarea{
+  border:2px solid #f3d3e6; border-radius:16px; padding:12px 14px; background:#fffafd;
+}
+input:focus,select:focus,textarea:focus{outline:3px solid #ffd0ea; border-color:var(--pink)}
+.grid2{display:grid; gap:12px}
+.fine{font-size:.85rem; color:var(--muted); font-weight:700}
+
+footer{
+  padding:28px 0 48px; color:var(--muted); font-weight:700;
+}
+.foot{
+  background:var(--ink); color:#fff; border-radius:32px; padding:22px;
+  display:grid; gap:8px;
+}
+.foot strong{color:var(--lime)}
+
+.toast{
+  position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(120%);
+  background:var(--ink); color:#fff; padding:14px 18px; border-radius:18px;
+  font-weight:800; z-index:70; width:min(440px, calc(100% - 24px));
+  box-shadow:var(--shadow); transition:transform .35s cubic-bezier(.2,1.2,.3,1);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media (min-width:860px){
+  .hero-grid{grid-template-columns:1.05fr .95fr; padding-top:18px}
+  .steps{grid-template-columns:1fr 1fr}
+  .packs{grid-template-columns:repeat(3,1fr); align-items:stretch}
+  .gallery{grid-template-columns:1.1fr .9fr}
+  .about{grid-template-columns:.8fr 1.2fr; align-items:start}
+  .grid2{grid-template-columns:1fr 1fr}
+  .menu-btn{display:none}
+}
+@media (max-width:859px){
+  .menu-btn{display:inline-flex}
+  .nav-links{
+    display:none; position:absolute; top:68px; left:12px; right:12px;
+    background:#fff; border-radius:22px; padding:14px; flex-direction:column; align-items:flex-start;
+    box-shadow:var(--shadow);
+  }
+  .nav-links.open{display:flex}
+  .nav .btn{width:100%}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important}
+}
+@keyframes wobble{50%{transform:rotate(-6deg) scale(1.04)}}
+@keyframes pulse{50%{transform:scale(.86)}}
+@keyframes shimmer{to{background-position:200% 0}}
+@keyframes morph{
+  0%,100%{border-radius:46% 54% 48% 52% / 42% 46% 54% 58%}
+  50%{border-radius:58% 42% 60% 40% / 52% 40% 60% 48%}
+}
+@keyframes float{50%{transform:translateY(-18px) scale(1.05)}}
+@keyframes drip{0%{transform:scaleY(.3); opacity:.3} 60%{transform:scaleY(1); opacity:1} 100%{transform:translateY(26px) scaleY(.4); opacity:0}}
+@keyframes slide{to{transform:translateX(-50%)}}
+@keyframes rise{to{opacity:1; transform:none}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)} 95%{transform:scaleY(.1)}}
+@keyframes stir{from{transform:rotate(-8deg)} to{transform:rotate(8deg)}}
+@keyframes risebub{from{transform:translateY(20px)} to{transform:translateY(-320px)}}
+@keyframes pop{to{transform:scale(1.4); opacity:0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="goo" />
+    <feBlend in="SourceGraphic" in2="goo" />
+  </filter>
+</svg>
+
+<header class="nav">
+  <a class="brand" href="#top"><span class="logo" aria-hidden="true"><span></span></span> Slime Pop Studio</a>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+  <nav class="nav-links" id="navLinks">
+    <a href="#how">How it works</a>
+    <a href="#packages">Packages</a>
+    <a href="#mix">Mix lab</a>
+    <a href="#emily">Emily</a>
+    <a href="#book" class="btn pink">Book a party</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="kicker"><span class="dot" aria-hidden="true">✦</span> Birthday slime parties · Ōtautahi</div>
+        <h1><span class="goo">Slime Pop</span><br />Studio</h1>
+        <p class="lede">Emily rolls up with tubs, glitter, and a playlist — and turns a Christchurch birthday into a stretchy, sparkly slime workshop.</p>
+        <div class="cta-row">
+          <a class="btn pink" href="#book">Book a pretend party</a>
+          <a class="btn ghost" href="#packages">See NZD packages</a>
+        </div>
+        <div class="meta-row">
+          <span class="pill">Ages 5–12</span>
+          <span class="pill">Cracroft &amp; Cashmere base</span>
+          <span class="pill">Citywide home visits</span>
+          <span class="pill">Take-home pots</span>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="drip"></div>
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+        <div class="blob b4"></div>
+        <div class="vat"></div>
+        <div class="face">
+          <div>
+            <div class="eyes"><i class="eye"></i><i class="eye"></i></div>
+            <div class="smile"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>STRETCH</span><b>✦</b><span>SQUISH</span><b>✦</b><span>GLITTER</span><b>✦</b><span>GLOW</span><b>✦</b><span>POP</span><b>✦</b><span>CHRISTCHURCH</span><b>✦</b><span>BIRTHDAY</span><b>✦</b>
+        <span>STRETCH</span><b>✦</b><span>SQUISH</span><b>✦</b><span>GLITTER</span><b>✦</b><span>GLOW</span><b>✦</b><span>POP</span><b>✦</b><span>CHRISTCHURCH</span><b>✦</b><span>BIRTHDAY</span><b>✦</b>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How a party pops</h2>
+      <p class="sub">Emily facilitates. Grown-ups host the house. Kids leave with a labelled pot and slime on their hands (it washes off — mostly).</p>
+      <div class="steps">
+        <article class="step"><div class="num">1</div><div><h3>Pick a package</h3><p>Tell us the birthday kid’s name, how many friends, and whether you want fluffy, glitter, or glow.</p></div></article>
+        <article class="step"><div class="num">2</div><div><h3>Emily arrives ready</h3><p>Aprons, bowls, safe recipes, and a mini science intro. Tables get a splash mat. Music goes on.</p></div></article>
+        <article class="step"><div class="num">3</div><div><h3>Mix, name, stretch</h3><p>Every kid makes their own batch, invents a silly slime name, and votes on the stretchiest one.</p></div></article>
+        <article class="step"><div class="num">4</div><div><h3>Pot it and party on</h3><p>Slime goes home in a sealed tub with a sticker. Cake time is yours. Emily packs the glitter away.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <div class="wrap">
+      <h2>Party packages</h2>
+      <p class="sub">Mock prices in NZD for Christchurch home parties. A parent or guardian stays the whole time. Supplies included.</p>
+      <div class="packs">
+        <article class="pack">
+          <p class="who">Mini Pop</p>
+          <div class="price">$149 <span>NZD</span></div>
+          <ul>
+            <li>Up to 6 kids · 45 minutes</li>
+            <li>One recipe — classic fluffy</li>
+            <li>Aprons, bowls, take-home pots</li>
+            <li>Perfect for a lounge in Cashmere</li>
+          </ul>
+          <a class="btn" href="#book" data-pack="Mini Pop">Choose Mini Pop</a>
+        </article>
+        <article class="pack pop">
+          <div class="ribbon">Most popped</div>
+          <p class="who">Party Pop</p>
+          <div class="price">$229 <span>NZD</span></div>
+          <ul>
+            <li>Up to 10 kids · 75 minutes</li>
+            <li>Two recipes — fluffy + glitter</li>
+            <li>Name-the-slime game + certificates</li>
+            <li>The birthday classic</li>
+          </ul>
+          <a class="btn pink" href="#book" data-pack="Party Pop">Choose Party Pop</a>
+        </article>
+        <article class="pack">
+          <p class="who">Glow Goo Gala</p>
+          <div class="price">$319 <span>NZD</span></div>
+          <ul>
+            <li>Up to 14 kids · 90 minutes</li>
+            <li>Three recipes, including glow</li>
+            <li>Photo-moment backdrop + tub labels</li>
+            <li>Lights down for the glow reveal</li>
+          </ul>
+          <a class="btn lime" href="#book" data-pack="Glow Goo Gala">Choose Glow Gala</a>
+        </article>
+      </div>
+      <p class="fine" style="margin-top:14px">Add a friend for $18. Weekends in school holidays book out first — on this demo, anyway.</p>
+    </div>
+  </section>
+
+  <section id="mix">
+    <div class="wrap">
+      <h2>Mix lab</h2>
+      <p class="sub">Tap colours, stir the bowl, then pop bubbles before they float off. Zero mess. Maximum goo energy.</p>
+      <div class="gallery">
+        <div class="lab">
+          <div class="swatches" id="swatches" role="group" aria-label="Slime colours"></div>
+          <div class="bowl-wrap">
+            <div class="bowl" aria-hidden="true"><div class="mix" id="mix"></div></div>
+          </div>
+          <p class="hint" id="mixHint">Tap two or more colours, then stir.</p>
+          <div class="lab-actions">
+            <button class="btn pink" type="button" id="stirBtn">Stir the slime</button>
+            <button class="btn ghost" type="button" id="resetMix">Start over</button>
+          </div>
+        </div>
+        <div class="bubbles" id="bubbles">
+          <h3>Pop the goo bubbles</h3>
+          <div class="score" id="score">0 pops</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="emily">
+    <div class="wrap about">
+      <div class="emily-card">
+        <div class="avatar" aria-hidden="true">🧑‍🔬</div>
+        <h2 style="margin:0">Hi, I’m Emily</h2>
+        <p class="sub" style="margin:0">I’m 12, I live around Cracroft, and I have strong opinions about slime texture. Too sticky is a crime. Too stiff is boring. The sweet spot jiggles.</p>
+        <p style="margin:0; font-weight:700">At your party I run the workshop like a tiny lab host: welcome, recipe, mix, stretch test, stickers. Parents stay in the room. I bring washable, kid-tested recipes and I do not let glitter escape unsupervised. (It tries.)</p>
+      </div>
+      <div>
+        <h2>Where I’ll pop up</h2>
+        <p class="sub">Based in Cracroft / Cashmere. I come to homes, backyards, and small halls across Ōtautahi Christchurch.</p>
+        <div class="chips" id="subs">
+          <span class="chip">Cracroft</span>
+          <span class="chip">Cashmere</span>
+          <span class="chip">Hoon Hay</span>
+          <span class="chip">Halswell</span>
+          <span class="chip">Spreydon</span>
+          <span class="chip">Hillmorton</span>
+          <span class="chip">Riccarton</span>
+          <span class="chip">Merivale</span>
+          <span class="chip">St Albans</span>
+          <span class="chip">Sumner</span>
+          <span class="chip">Lyttelton</span>
+          <span class="chip">Rangiora by arrangement</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap" style="display:grid; gap:16px">
+      <div>
+        <h2>Book a slime party</h2>
+        <p class="sub">This form is a mock-up. Nothing is emailed, saved, or charged. Hit send and watch the toast pop.</p>
+      </div>
+      <form class="book" id="bookForm">
+        <div class="grid2">
+          <label>Parent or guardian name
+            <input name="parent" required placeholder="Alex Chen" autocomplete="name" />
+          </label>
+          <label>Birthday kid
+            <input name="kid" required placeholder="Mia" />
+          </label>
+          <label>Party date
+            <input name="date" type="date" required />
+          </label>
+          <label>Suburb
+            <input name="suburb" required placeholder="Cashmere" />
+          </label>
+          <label>Package
+            <select name="package" id="package" required>
+              <option value="Mini Pop">Mini Pop — $149</option>
+              <option value="Party Pop" selected>Party Pop — $229</option>
+              <option value="Glow Goo Gala">Glow Goo Gala — $319</option>
+            </select>
+          </label>
+          <label>How many kids
+            <input name="kids" type="number" min="4" max="16" value="8" required />
+          </label>
+        </div>
+        <label>Slime wish
+          <textarea name="note" rows="3" placeholder="Glow, extra glitter, no scents…"></textarea>
+        </label>
+        <button class="btn pink" type="submit">Send pretend request</button>
+        <p class="fine">Demo only. Emily is not actually taking bookings from this page.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div style="font-family:'Baloo 2',cursive; font-size:1.6rem">Slime Pop Studio <strong>by Emily</strong></div>
+    <div>Kids’ birthday slime workshops · Cracroft, Cashmere &amp; Christchurch citywide.</div>
+    <div>Demo mock-up for a family idea. Not a real business, not a real checkout, and the form does not send anything.</div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const colours = [
+  { name:"Bubblegum", hex:"#ff4f9a" },
+  { name:"Lime zap", hex:"#c8ff3d" },
+  { name:"Ocean pop", hex:"#3ad7ff" },
+  { name:"Grape fizz", hex:"#7a2bff" },
+  { name:"Sunshine", hex:"#ffe14a" },
+  { name:"Cotton", hex:"#fff6fb" }
+];
+const picked = new Set();
+const swatches = document.getElementById("swatches");
+const mix = document.getElementById("mix");
+const hint = document.getElementById("mixHint");
+colours.forEach((c, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "swatch";
+  b.style.background = c.hex;
+  b.setAttribute("aria-label", c.name);
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => {
+    if (picked.has(i)) { picked.delete(i); b.classList.remove("on"); b.setAttribute("aria-pressed","false"); }
+    else { picked.add(i); b.classList.add("on"); b.setAttribute("aria-pressed","true"); }
+    paint();
+  });
+  swatches.appendChild(b);
+});
+function hexToRgb(h){
+  const n = parseInt(h.slice(1), 16);
+  return [(n>>16)&255, (n>>8)&255, n&255];
+}
+function paint(){
+  if (!picked.size){
+    mix.style.background = "#ffd0e6";
+    hint.textContent = "Tap two or more colours, then stir.";
+    return;
+  }
+  let r=0,g=0,b=0;
+  const names = [];
+  picked.forEach(i => {
+    const rgb = hexToRgb(colours[i].hex);
+    r += rgb[0]; g += rgb[1]; b += rgb[2];
+    names.push(colours[i].name);
+  });
+  const n = picked.size;
+  const col = "rgb(" + Math.round(r/n) + "," + Math.round(g/n) + "," + Math.round(b/n) + ")";
+  mix.style.background = col;
+  hint.textContent = names.join(" + ") + (n > 1 ? " — looks illegally stretchy." : " — add another colour.");
+}
+document.getElementById("stirBtn").addEventListener("click", () => {
+  mix.classList.remove("spin");
+  void mix.offsetWidth;
+  mix.classList.add("spin");
+  blip(520, .06);
+  if (picked.size > 1) hint.textContent = hint.textContent.replace("looks illegally stretchy.", "STIRRED. Name it something ridiculous.");
+});
+document.getElementById("resetMix").addEventListener("click", () => {
+  picked.clear();
+  swatches.querySelectorAll(".swatch").forEach(el => { el.classList.remove("on"); el.setAttribute("aria-pressed","false"); });
+  paint();
+});
+
+const field = document.getElementById("bubbles");
+const scoreEl = document.getElementById("score");
+let pops = 0;
+function spawn(){
+  const el = document.createElement("button");
+  el.type = "button";
+  el.className = "bubble";
+  el.setAttribute("aria-label", "Pop bubble");
+  const size = 36 + Math.random()*48;
+  el.style.width = size + "px";
+  el.style.height = size + "px";
+  el.style.left = Math.random()*78 + "%";
+  el.style.bottom = "-60px";
+  el.style.animationDuration = (4 + Math.random()*4) + "s";
+  el.addEventListener("click", () => {
+    el.classList.add("popped");
+    pops += 1;
+    scoreEl.textContent = pops + (pops === 1 ? " pop" : " pops");
+    blip(340 + Math.random()*280, .05);
+    setTimeout(() => el.remove(), 220);
+  });
+  el.addEventListener("animationend", () => el.remove());
+  field.appendChild(el);
+}
+setInterval(spawn, 700);
+for (let i=0;i<5;i++) spawn();
+
+function blip(freq, dur){
+  try{
+    const ctx = blip.ctx || (blip.ctx = new (window.AudioContext || window.webkitAudioContext)());
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "triangle";
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.08, ctx.currentTime + .02);
+    g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + dur);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + dur + .02);
+  }catch(e){}
+}
+
+document.querySelectorAll("[data-pack]").forEach(a => {
+  a.addEventListener("click", () => {
+    document.getElementById("package").value = a.getAttribute("data-pack");
+  });
+});
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+menuBtn.addEventListener("click", () => {
+  const open = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+});
+navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  navLinks.classList.remove("open");
+  menuBtn.setAttribute("aria-expanded", "false");
+}));
+
+const toast = document.getElementById("toast");
+let toastTimer;
+document.getElementById("bookForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const kid = data.get("kid");
+  const pack = data.get("package");
+  toast.textContent = "Pop! " + kid + "’s " + pack + " request is pretend-booked. Nothing was sent — this is a demo.";
+  toast.classList.add("show");
+  blip(660, .08);
+  setTimeout(() => blip(880, .1), 90);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 4200);
+  e.target.reset();
+  document.getElementById("package").value = pack;
+});
+</script>
+</body>
+</html>
