@@ -1,0 +1,167 @@
+div>
+
+<script>
+const RAW_BASE = "https://raw.githubusercontent.com/chiewbacca/chiewbucks/main/img-b64/";
+const DRINK_FILES = {
+  "caramel-cloud": "caramel-cloud.b64",
+  "matcha-mist": "matcha-mist.b64",
+  "choco-blizzard": "choco-blizzard.b64",
+  "berry-breeze": "berry-breeze.b64",
+  "vanilla-orbit": "vanilla-orbit.b64",
+  "sunny-citrus": "sunny-citrus.b64",
+  "logo": "logo.b64"
+};
+window.CHIEW_IMGS = {};
+function imgOf(id) { return (window.CHIEW_IMGS && CHIEW_IMGS[id]) || ""; }
+
+const DRINKS = [
+  { id: "caramel-cloud", name: "Caramel Cloud Latte", cat: "coffee", tag: "Signature", price: 6.45, desc: "Espresso, velvety milk, and ribbons of buttery caramel. The house hero — cloudy, sweet, unforgettable." },
+  { id: "matcha-mist", name: "Matcha Mist Latte", cat: "tea", tag: "Zen", price: 6.25, desc: "Ceremonial-grade matcha whisked silky-smooth with steamed milk. Calm energy in a cup." },
+  { id: "choco-blizzard", name: "Choco Blizzard", cat: "blended", tag: "Indulgent", price: 6.95, desc: "Blended chocolate decadence topped with a mountain of cream and cocoa snow." },
+  { id: "berry-breeze", name: "Berry Breeze Cream", cat: "refreshers", tag: "Fruity", price: 5.95, desc: "Strawberry cream swirled cold — bright, playful, and made for sunshine days." },
+  { id: "vanilla-orbit", name: "Vanilla Orbit Cold Brew", cat: "coffee", tag: "Bold", price: 5.75, desc: "Slow-steeped cold brew crowned with sweet cream foam. Smooth gravity for your morning." },
+  { id: "sunny-citrus", name: "Sunny Citrus Splash", cat: "refreshers", tag: "Fresh", price: 4.95, desc: "Sparkling lemonade with lemon wheels and mint. Pure orchard sunshine." }
+];
+
+async function fetchB64(file) {
+  const urls = [];
+  const host = location.hostname || "";
+  if (location.protocol.startsWith("http") && host !== "htmlpreview.github.io") urls.push("img-b64/" + file);
+  urls.push(RAW_BASE + file);
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const text = (await res.text()).trim();
+      if (text && !text.startsWith("<")) return text;
+    } catch (err) { /* try next */ }
+  }
+  return "";
+}
+async function loadImgs() {
+  await Promise.all(Object.entries(DRINK_FILES).map(async ([key, file]) => {
+    const text = await fetchB64(file);
+    if (text) CHIEW_IMGS[key] = "data:image/webp;base64," + text;
+  }));
+  const logo = document.getElementById("brandLogo");
+  if (logo && CHIEW_IMGS.logo) logo.src = CHIEW_IMGS.logo;
+  const hero = document.getElementById("heroDrink");
+  if (hero && CHIEW_IMGS["caramel-cloud"]) hero.src = CHIEW_IMGS["caramel-cloud"];
+  renderMenu();
+  renderCart();
+  const status = document.getElementById("brewStatus");
+  if (status) status.classList.remove("show");
+}
+
+const beansEl = document.getElementById("beans");
+for (let i = 0; i < 22; i++) {
+  const b = document.createElement("div");
+  b.className = "bean" + (i % 5 === 0 ? " gold" : "");
+  b.style.left = Math.random() * 100 + "%";
+  b.style.animationDuration = (12 + Math.random() * 18) + "s";
+  b.style.animationDelay = (-Math.random() * 18) + "s";
+  b.style.scale = String(0.55 + Math.random() * 1.1);
+  beansEl.appendChild(b);
+}
+
+const finePointer = window.matchMedia("(pointer: fine)").matches;
+if (finePointer) {
+  window.addEventListener("pointermove", (e) => {
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+    document.documentElement.style.setProperty("--px", (x * 28) + "px");
+    document.documentElement.style.setProperty("--py", (y * 18) + "px");
+  }, { passive: true });
+  const hv = document.getElementById("heroVisual");
+  hv.addEventListener("pointermove", (e) => {
+    const r = hv.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    hv.style.transform = "rotateY(" + (x * 14) + "deg) rotateX(" + (-y * 10) + "deg)";
+  });
+  hv.addEventListener("pointerleave", () => { hv.style.transform = ""; });
+}
+
+let heroI = 0;
+setInterval(() => {
+  heroI = (heroI + 1) % DRINKS.length;
+  const drink = DRINKS[heroI];
+  const src = imgOf(drink.id);
+  const img = document.getElementById("heroDrink");
+  const name = document.getElementById("heroName");
+  if (name) name.textContent = drink.name;
+  if (!src || !img) return;
+  img.style.opacity = "0";
+  setTimeout(() => { img.src = src; img.alt = drink.name; img.style.opacity = "1"; }, 280);
+}, 6800);
+
+const grid = document.getElementById("menuGrid");
+let activeFilter = "all";
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach((en) => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add("in");
+    cardObserver.unobserve(en.target);
+  });
+}, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+
+function renderMenu() {
+  const list = DRINKS.filter((d) => activeFilter === "all" || d.cat === activeFilter);
+  grid.innerHTML = list.map((d, i) => `
+    <button class="card" type="button" data-id="${d.id}" style="transition-delay:${Math.min(i, 8) * 55}ms">
+      <div class="card-lift">
+        <div class="card-img">
+          <span class="card-tag">${d.tag}</span>
+          <img src="${imgOf(d.id)}" alt="${d.name}" />
+        </div>
+        <div class="card-body">
+          <h3>${d.name}</h3>
+          <p class="desc">${d.desc}</p>
+          <div class="card-row">
+            <span class="price">$${d.price.toFixed(2)}</span>
+            <span class="add-mini" data-quick="${d.id}" role="button" aria-label="Quick add ${d.name}">+</span>
+          </div>
+        </div>
+      </div>
+    </button>`).join("");
+  grid.querySelectorAll(".card").forEach((card) => cardObserver.observe(card));
+}
+
+document.querySelectorAll(".filter").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+    renderMenu();
+  });
+});
+
+let selected = null;
+let qty = 1;
+let sizeMult = 1;
+let sizeName = "Tall";
+let cart = [];
+const modal = document.getElementById("modal");
+const modalBackdrop = document.getElementById("modalBackdrop");
+const addBtn = document.getElementById("addToCart");
+const qtyVal = document.getElementById("qtyVal");
+
+function money(n) { return "$" + n.toFixed(2); }
+function openModal(id) {
+  selected = DRINKS.find((d) => d.id === id);
+  if (!selected) return;
+  qty = 1; sizeMult = 1; sizeName = "Tall";
+  qtyVal.textContent = "1";
+  document.querySelectorAll(".size").forEach((s, i) => s.classList.toggle("active", i === 0));
+  const pic = document.getElementById("modalImg");
+  const src = imgOf(selected.id);
+  if (src) pic.src = src;
+  pic.alt = selected.name;
+  document.getElementById("modalTitle").textContent = selected.name;
+  document.getElementById("modalDesc").textContent = selected.desc;
+  updateAddLabel();
+  modal.classList.add("open");
+  modalBackdrop.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeM
