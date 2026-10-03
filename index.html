@@ -5,12 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#006241" />
 <title>ChiewBucks — Sip the Extraordinary</title>
-<meta name="description" content="ChiewBucks — a playful coffeehouse mock store for Emily & Oliver. Order drinks, catch beans. Demo only." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<style>
-:root{--green:#006241}body{font-family:sans-serif}/* FULL PAGE CONTINUES */
-</style>
+<style>html,body{margin:0;background:#f7f3eb;font-family:system-ui,sans-serif;color:#006241}
+.boot{min-height:100vh;display:grid;place-items:center;text-align:center;padding:24px}
+.spin{width:40px;height:40px;border:3px solid #cba258;border-top-color:#006241;border-radius:50%;margin:0 auto 14px;animation:s 0.8s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}</style>
 </head>
-<body><h1>ChiewBucks</h1><p id="note">Full source is local; finishing upload.</p><script>document.getElementById('note').textContent='Bean Catch'</script></body></html>
+<body>
+<div class="boot" id="boot"><div><div class="spin"></div><p>Brewing ChiewBucks…</p></div></div>
+<script>
+(async function () {
+  const BASE = 'https://raw.githubusercontent.com/chiewbacca/chiewbucks/main/parts/';
+  const PARTS = ['p00.html', 'p01.html', 'p02.html', 'p03.html', 'p04.html', 'p05.html', 'p06.html', 'p07.html', 'p08.html'];
+  try {
+    const chunks = await Promise.all(PARTS.map(p => fetch(BASE + p + '?v=' + Date.now()).then(r => {
+      if (!r.ok) throw new Error(p + ' ' + r.status);
+      return r.text();
+    })));
+    document.open();
+    document.write(chunks.join(''));
+    document.close();
+  } catch (e) {
+    document.getElementById('boot').innerHTML = '<p>Could not load demo.</p><p style="font-size:12px;opacity:.7">' + e + '</p>';
+  }
+})();
+</script>
+</body>
+</html>
