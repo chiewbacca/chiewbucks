@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#ff2d8a" />
+<meta name="description" content="Slime Pop Studio by Emily — kids’ birthday slime workshops around Christchurch. Emily comes to your party and facilitates slime making for the whole group." />
+<title>Slime Pop Studio by Emily — Christchurch slime parties</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#2a1038;
+  --pink:#ff2d8a;
+  --pink-deep:#e01270;
+  --grape:#7a2bff;
+  --lime:#c8ff3d;
+  --aqua:#3ad7ff;
+  --sun:#ffe14a;
+  --cream:#fff6fb;
+  --card:#ffffff;
+  --muted:#6b4d78;
+  --shadow:0 18px 50px rgba(80,10,70,.16);
+  --radius:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:"Nunito",system-ui,sans-serif;
+  background:
+    radial-gradient(900px 500px at -10% -10%, #ffd0ea 0%, transparent 55%),
+    radial-gradient(800px 480px at 110% 0%, #d9c6ff 0%, transparent 50%),
+    radial-gradient(700px 500px at 50% 120%, #d8fff2 0%, transparent 45%),
+    var(--cream);
+  overflow-x:hidden;
+}
+img{max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+.wrap{width:min(1120px, calc(100% - 32px)); margin-inline:auto}
+
+.nav{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:12px 16px;
+  background:rgba(255,246,251,.78);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,45,138,.12);
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; font-family:"Baloo 2",cursive; font-weight:800; font-size:1.15rem}
+.logo{
+  width:42px; height:42px; border-radius:50%;
+  background:conic-gradient(from 120deg, var(--pink), var(--sun), var(--lime), var(--aqua), var(--grape), var(--pink));
+  display:grid; place-items:center;
+  box-shadow:0 8px 0 #2a1038;
+  animation:wobble 3.4s ease-in-out infinite;
+}
+.logo span{width:22px; height:18px; border-radius:40% 40% 46% 46%; background:#fff; display:block; position:relative}
+.logo span:before,.logo span:after{content:""; position:absolute; width:5px; height:5px; background:#2a1038; border-radius:50%; top:5px}
+.logo span:before{left:4px} .logo span:after{right:4px}
+.nav-links{display:flex; gap:16px; align-items:center}
+.nav-links a{text-decoration:none; font-weight:800; font-size:.92rem}
+.nav-links a:hover{color:var(--pink-deep)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:0; cursor:pointer; text-decoration:none;
+  background:var(--ink); color:#fff;
+  border-radius:999px; padding:14px 22px;
+  font-weight:800; letter-spacing:.01em;
+  box-shadow:0 8px 0 #140818;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(6px); box-shadow:0 2px 0 #140818}
+.btn.pink{background:linear-gradient(180deg,#ff5aa6,var(--pink)); color:#fff}
+.btn.lime{background:var(--lime); color:var(--ink)}
+.btn.ghost{background:#fff; color:var(--ink); box-shadow:0 8px 0 #f3c3dc}
+.menu-btn{display:none; border:0; background:#fff; border-radius:14px; padding:10px 12px; font-weight:800; box-shadow:0 4px 0 #f3c3dc}
+
+.hero{position:relative; padding:28px 0 10px; z-index:1}
+.hero-grid{display:grid; gap:28px; align-items:center}
+.kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#fff; border-radius:999px; padding:6px 12px 6px 6px;
+  font-weight:800; font-size:.85rem; box-shadow:var(--shadow);
+}
+.dot{width:28px; height:28px; border-radius:50%; background:var(--lime); display:grid; place-items:center; animation:pulse 1.6s ease infinite}
+h1{
+  font-family:"Baloo 2",cursive; font-weight:800;
+  font-size:clamp(3rem, 10vw, 6.4rem);
+  line-height:.88; margin:.35em 0 .2em; letter-spacing:-.03em;
+}
+h1 .goo{
+  display:inline-block;
+  background:linear-gradient(100deg, var(--pink), var(--grape) 40%, var(--aqua) 75%, var(--pink));
+  background-size:200% 100%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:shimmer 5s linear infinite;
+  filter:drop-shadow(0 10px 0 rgba(255,45,138,.15));
+}
+.lede{font-size:1.15rem; color:var(--muted); max-width:38ch; font-weight:700}
+.cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+.meta-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+.pill{background:#fff; border-radius:999px; padding:8px 12px; font-weight:800; font-size:.85rem; box-shadow:0 6px 0 rgba(42,16,56,.06)}
+
+.stage{
+  position:fixed;
+  inset:0;
+  z-index:25;
+  pointer-events:none;
+  overflow:visible;
+  background:none;
+  border:0;
+  border-radius:0;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.play-caption{
+  margin:14px 0 0;
+  font-family:"Baloo 2",cursive; font-weight:700; font-size:1rem;
+  color:var(--ink);
+}
+.vat{
+  position:absolute;
+  width:min(240px, 42vw);
+  aspect-ratio:1;
+  left:58%; top:18%;
+  border-radius:46% 54% 48% 52% / 42% 46% 54% 58%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), transparent 28%),
+    linear-gradient(160deg, #ff4fa0, #ff2d8a 40%, #b14bff 78%);
+  box-shadow:inset 0 -30px 40px rgba(80,0,60,.25), 0 18px 28px rgba(42,16,56,.16);
+  animation:morph 7s ease-in-out infinite;
+  z-index:2;
+  touch-action:none;
+  cursor:grab;
+  pointer-events:auto;
+}
+.blob{
+  position:absolute; border-radius:50%;
+  z-index:3;
+  touch-action:none;
+  cursor:grab;
+  pointer-events:auto;
+  box-shadow:inset 0 -10px 16px rgba(42,16,56,.12), 0 12px 22px rgba(42,16,56,.14);
+  animation:morph 8s ease-in-out infinite;
+}
+.blob:focus-visible,.vat:focus-visible{outline:3px solid var(--ink); outline-offset:4px}
+.stage.grabbing .blob,.stage.grabbing .vat{cursor:grabbing}
+.b1{width:118px; height:108px; background:#c8ff3d; left:6%; top:12%; animation-delay:-1s}
+.b2{width:92px; height:92px; background:#3ad7ff; left:78%; top:8%; animation-delay:-2.2s}
+.b3{width:78px; height:84px; background:#ffe14a; left:8%; top:62%; animation-delay:-.6s}
+.b4{width:70px; height:70px; background:#7a2bff; left:82%; top:70%; animation-delay:-3s}
+.b5{width:58px; height:62px; background:#ff7a3d; left:42%; top:78%; animation-delay:-1.6s}
+.b6{width:52px; height:52px; background:#7dffc3; left:30%; top:38%; animation-delay:-2.8s}
+.face{position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:2}
+.eyes{display:flex; gap:36px}
+.eye{width:22px; height:26px; background:#2a1038; border-radius:50%; position:relative; animation:blink 4.5s infinite; display:block}
+.pupil{position:absolute; width:7px; height:7px; background:#fff; border-radius:50%; top:5px; left:5px}
+.smile{width:54px; height:22px; border:5px solid #2a1038; border-top:0; border-radius:0 0 40px 40px; margin:10px auto 0; transition:transform .2s ease}
+.vat.happy .smile{transform:scaleX(1.25) translateY(2px)}
+.drip{
+  position:absolute; top:-36px; left:50%; width:18px; height:70px; margin-left:-9px;
+  background:linear-gradient(#ff7ab8, #ff2d8a);
+  border-radius:0 0 20px 20px;
+  animation:drip 2.8s ease-in-out infinite;
+  pointer-events:none;
+  z-index:4;
+}
+.goo-bit{
+  position:absolute; border-radius:46% 54% 42% 58%;
+  pointer-events:none; z-index:8;
+  animation:gooFly .62s ease-out forwards;
+}
+.floater{
+  position:absolute; z-index:9; pointer-events:none;
+  font-family:"Baloo 2",cursive; font-weight:800; font-size:1.35rem;
+  color:var(--ink);
+  text-shadow:0 2px 0 #fff;
+  animation:floatUp .7s ease-out forwards;
+  transform:translate(-50%, -50%);
+}
+.goo-cursor{
+  position:fixed; z-index:80; width:18px; height:18px; margin:-9px 0 0 -9px;
+  border-radius:50%; pointer-events:none; opacity:0;
+  background:radial-gradient(circle at 30% 30%, #fff, var(--pink) 55%);
+  box-shadow:0 6px 0 rgba(42,16,56,.12);
+  transition:width .12s ease, height .12s ease, opacity .2s ease;
+}
+.goo-cursor.on{opacity:.9}
+.goo-cursor.big{width:34px; height:28px; border-radius:46% 54% 50% 50%}
+.trail{
+  position:fixed; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
+  pointer-events:none; z-index:79; opacity:.7;
+  animation:trailFade .45s ease-out forwards;
+}
+
+.marquee{
+  margin:10px 0 0; overflow:hidden;
+  background:var(--ink); color:#fff;
+  transform:rotate(-1.2deg);
+}
+.marquee-track{display:flex; gap:28px; width:max-content; animation:slide 18s linear infinite; padding:12px 0; font-family:"Baloo 2",cursive; font-size:1.2rem}
+.marquee b{color:var(--lime)}
+
+section{padding:64px 0}
+h2{font-family:"Baloo 2",cursive; font-size:clamp(2rem,5vw,3.2rem); line-height:1; margin:0 0 8px}
+.sub{color:var(--muted); font-weight:700; margin:0 0 22px; max-width:52ch}
+
+.steps{display:grid; gap:14px}
+.step{
+  background:#fff; border-radius:var(--radius); padding:18px;
+  box-shadow:var(--shadow); display:grid; grid-template-columns:64px 1fr; gap:12px; align-items:center;
+  transform:translateY(16px); opacity:0; animation:rise .7s ease forwards;
+}
+.step:nth-child(2){animation-delay:.1s}
+.step:nth-child(3){animation-delay:.2s}
+.step:nth-child(4){animation-delay:.3s}
+.num{
+  width:64px; height:64px; border-radius:22px;
+  display:grid; place-items:center;
+  font-family:"Baloo 2",cursive; font-size:1.7rem;
+  background:var(--lime); box-shadow:0 6px 0 #9ed41a;
+}
+.step h3{margin:0 0 4px; font-size:1.15rem}
+.step p{margin:0; color:var(--muted); font-weight:700}
+
+.packs{display:grid; gap:16px}
+.pack{
+  background:#fff; border-radius:32px; padding:22px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.pack.pop{background:linear-gradient(180deg,#fff, #fff5fb); outline:3px solid var(--pink)}
+.ribbon{
+  position:absolute; top:16px; right:-36px; transform:rotate(28deg);
+  background:var(--pink); color:#fff; font-weight:800; font-size:.75rem;
+  padding:6px 42px;
+}
+.price{font-family:"Baloo 2",cursive; font-size:2.6rem; margin:6px 0}
+.price span{font-size:1rem; color:var(--muted)}
+.pack ul{margin:0 0 16px; padding:0; list-style:none}
+.pack li{padding:6px 0 6px 26px; position:relative; font-weight:700}
+.pack li:before{content:"●"; position:absolute; left:0; color:var(--pink)}
+.pack .who{font-weight:800; color:var(--grape)}
+
+.gallery{display:grid; gap:16px}
+.swatches{display:flex; flex-wrap:wrap; gap:10px}
+.swatch{
+  width:54px; height:54px; border-radius:50%; border:3px solid #fff;
+  box-shadow:0 6px 0 rgba(42,16,56,.15); cursor:pointer;
+  transition:transform .15s ease;
+}
+.swatch.on{outline:3px solid var(--ink); transform:scale(1.08)}
+.lab{
+  background:#fff; border-radius:32px; padding:18px; box-shadow:var(--shadow);
+  display:grid; gap:14px;
+}
+.bowl-wrap{display:grid; place-items:center; min-height:240px; position:relative}
+.jar{
+  width:132px; height:188px; position:relative;
+  border-radius:16px 16px 36px 36px;
+  background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.55));
+  border:4px solid #fff;
+  box-shadow:inset 0 0 0 3px rgba(42,16,56,.08), 0 16px 0 rgba(42,16,56,.08), var(--shadow);
+  overflow:visible;
+}
+.jar:before{
+  content:""; position:absolute; top:-18px; left:28px; right:28px; height:22px;
+  border-radius:10px 10px 4px 4px;
+  background:#fff; box-shadow:0 4px 0 rgba(42,16,56,.08); z-index:3;
+}
+.jar-fill{
+  position:absolute; left:6px; right:6px; bottom:6px; height:62%;
+  border-radius:30% 36% 26px 26px;
+  background:#ffd0e6;
+  transform-origin:50% 80%;
+  transition:background .35s ease, height .35s ease;
+  z-index:1;
+}
+.jar-fill.spin{animation:stir .7s ease}
+.jar-shine{
+  position:absolute; inset:8px auto auto 10px; width:16px; height:46%;
+  border-radius:20px; background:rgba(255,255,255,.55); z-index:2; pointer-events:none;
+}
+.lab-actions{display:flex; gap:10px; flex-wrap:wrap}
+.hint{font-weight:800; color:var(--muted); min-height:1.4em}
+
+.bubbles{
+  position:relative; height:280px; border-radius:32px; overflow:hidden;
+  background:linear-gradient(180deg,#7a2bff,#ff2d8a);
+  box-shadow:var(--shadow);
+  touch-action:manipulation;
+}
+.bubbles h3{position:relative; z-index:2; color:#fff; margin:16px 16px 0; font-family:"Baloo 2",cursive}
+.score{position:absolute; top:16px; right:16px; z-index:2; background:#fff; border-radius:999px; padding:6px 12px; font-weight:800}
+.bubble{
+  position:absolute; border-radius:50%; cursor:pointer;
+  background:radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.15) 42%, rgba(255,255,255,.05));
+  border:2px solid rgba(255,255,255,.7);
+  animation:risebub linear infinite;
+  touch-action:manipulation;
+}
+.bubble.popped{animation:pop .25s ease forwards}
+
+.about{display:grid; gap:16px}
+.emily-card{
+  background:#fff; border-radius:36px; padding:22px; box-shadow:var(--shadow);
+  display:grid; gap:12px;
+}
+.avatar{
+  width:120px; height:120px; border-radius:40% 60% 50% 50%;
+  background:linear-gradient(160deg, var(--sun), var(--pink));
+  display:grid; place-items:center;
+  box-shadow:0 12px 0 #f0b423;
+  animation:wobble 4s ease-in-out infinite;
+  font-size:3rem;
+}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{background:#fff; border-radius:999px; padding:8px 12px; font-weight:800; box-shadow:0 5px 0 #ead3f0}
+
+form.book{
+  background:#fff; border-radius:32px; padding:18px; box-shadow:var(--shadow);
+  display:grid; gap:12px;
+}
+label{font-weight:800; font-size:.9rem; display:grid; gap:6px}
+input,select,textarea{
+  border:2px solid #f3d3e6; border-radius:16px; padding:12px 14px; background:#fffafd;
+}
+input:focus,select:focus,textarea:focus{outline:3px solid #ffd0ea; border-color:var(--pink)}
+.grid2{display:grid; gap:12px}
+.fine{font-size:.85rem; color:var(--muted); font-weight:700}
+
+footer{padding:28px 0 48px; color:var(--muted); font-weight:700}
+.foot{
+  background:var(--ink); color:#fff; border-radius:32px; padding:22px;
+  display:grid; gap:8px;
+}
+.foot strong{color:var(--lime)}
+
+.toast{
+  position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(120%);
+  background:var(--ink); color:#fff; padding:14px 18px; border-radius:18px;
+  font-weight:800; z-index:70; width:min(440px, calc(100% - 24px));
+  box-shadow:var(--shadow); transition:transform .35s cubic-bezier(.2,1.2,.3,1);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media (min-width:860px){
+  .hero-grid{grid-template-columns:minmax(0, 680px); padding-top:18px}
+  .steps{grid-template-columns:1fr 1fr}
+  .packs{grid-template-columns:repeat(3,1fr); align-items:stretch}
+  .gallery{grid-template-columns:1.1fr .9fr}
+  .about{grid-template-columns:.8fr 1.2fr; align-items:start}
+  .grid2{grid-template-columns:1fr 1fr}
+  .menu-btn{display:none}
+}
+@media (max-width:859px){
+  .menu-btn{display:inline-flex}
+  .nav-links{
+    display:none; position:absolute; top:68px; left:12px; right:12px;
+    background:#fff; border-radius:22px; padding:14px; flex-direction:column; align-items:flex-start;
+    box-shadow:var(--shadow);
+  }
+  .nav-links.open{display:flex}
+  .nav .btn{width:100%}
+  .vat{width:min(200px, 46vw)}
+  .b1{width:96px; height:88px}
+  .b2{width:78px; height:78px}
+  .b5{width:56px; height:56px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important}
+}
+@keyframes wobble{50%{transform:rotate(-6deg) scale(1.04)}}
+@keyframes pulse{50%{transform:scale(.86)}}
+@keyframes shimmer{to{background-position:200% 0}}
+@keyframes morph{
+  0%,100%{border-radius:46% 54% 48% 52% / 42% 46% 54% 58%}
+  50%{border-radius:58% 42% 60% 40% / 52% 40% 60% 48%}
+}
+@keyframes float{50%{transform:translateY(-16px) scale(1.06)}}
+@keyframes drip{0%{transform:scaleY(.3); opacity:.3} 60%{transform:scaleY(1); opacity:1} 100%{transform:translateY(26px) scaleY(.4); opacity:0}}
+@keyframes slide{to{transform:translateX(-50%)}}
+@keyframes rise{to{opacity:1; transform:none}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)} 95%{transform:scaleY(.1)}}
+@keyframes stir{from{transform:rotate(-8deg)} to{transform:rotate(8deg)}}
+@keyframes risebub{from{transform:translateY(20px)} to{transform:translateY(-320px)}}
+@keyframes pop{to{transform:scale(1.4); opacity:0}}
+@keyframes gooFly{to{transform:translate(var(--dx), var(--dy)) scale(.25); opacity:0}}
+@keyframes floatUp{to{transform:translate(-50%, -46px); opacity:0}}
+@keyframes trailFade{to{transform:scale(.2); opacity:0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+    <feBlend in="SourceGraphic" in2="goo" />
+  </filter>
+</svg>
+<div class="goo-cursor" id="gooCursor" aria-hidden="true"></div>
+<div class="stage" id="stage">
+  <div class="blob b1" tabindex="0" role="button" aria-label="Lime slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b2" tabindex="0" role="button" aria-label="Aqua slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b3" tabindex="0" role="button" aria-label="Sunshine slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b4" tabindex="0" role="button" aria-label="Grape slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b5" tabindex="0" role="button" aria-label="Orange slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b6" tabindex="0" role="button" aria-label="Mint slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="vat" id="vat" tabindex="0" role="button" aria-label="Big pink slime. Tap to bounce, splat, and change colour. Drag to squish it around.">
+    <div class="drip" aria-hidden="true"></div>
+    <div class="face" aria-hidden="true">
+      <div>
+        <div class="eyes"><i class="eye"><i class="pupil"></i></i><i class="eye"><i class="pupil"></i></i></div>
+        <div class="smile"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="nav">
+  <a class="brand" href="#top"><span class="logo" aria-hidden="true"><span></span></span> Slime Pop Studio</a>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+  <nav class="nav-links" id="navLinks">
+    <a href="#how">How it works</a>
+    <a href="#packages">Packages</a>
+    <a href="#mix">Mix lab</a>
+    <a href="#emily">Emily</a>
+    <a href="#book" class="btn pink">Book a party</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="kicker"><span class="dot" aria-hidden="true">✦</span> Birthday slime parties · Ōtautahi</div>
+        <h1><span class="goo">Slime Pop</span><br />Studio</h1>
+        <p class="lede">Emily rolls up with tubs, glitter, and a playlist — and turns a Christchurch birthday into a stretchy, sparkly slime workshop.</p>
+        <div class="cta-row">
+          <a class="btn pink" href="#book">Book a party</a>
+          <a class="btn ghost" href="#packages">See NZD packages</a>
+        </div>
+        <div class="meta-row">
+          <span class="pill">Ages 5–12</span>
+          <span class="pill">Cracroft &amp; Cashmere base</span>
+          <span class="pill">Citywide home visits</span>
+          <span class="pill">Take-home pots</span>
+        </div>
+        <p class="play-caption" id="playCaption">Blobs roam the whole page — tap to splat, drag them anywhere</p>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>STRETCH</span><b>✦</b><span>SQUISH</span><b>✦</b><span>GLITTER</span><b>✦</b><span>GLOW</span><b>✦</b><span>POP</span><b>✦</b><span>CHRISTCHURCH</span><b>✦</b><span>BIRTHDAY</span><b>✦</b>
+        <span>STRETCH</span><b>✦</b><span>SQUISH</span><b>✦</b><span>GLITTER</span><b>✦</b><span>GLOW</span><b>✦</b><span>POP</span><b>✦</b><span>CHRISTCHURCH</span><b>✦</b><span>BIRTHDAY</span><b>✦</b>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How a party pops</h2>
+      <p class="sub">Emily facilitates. Grown-ups host the house. Kids leave with a labelled pot and slime on their hands (it washes off — mostly).</p>
+      <div class="steps">
+        <article class="step"><div class="num">1</div><div><h3>Pick a package</h3><p>Tell us the birthday kid’s name, how many friends, and whether you want fluffy, glitter, or glow.</p></div></article>
+        <article class="step"><div class="num">2</div><div><h3>Emily arrives ready</h3><p>Aprons, bowls, safe recipes, and a mini science intro. Tables get a splash mat. Music goes on.</p></div></article>
+        <article class="step"><div class="num">3</div><div><h3>Mix, name, stretch</h3><p>Every kid makes their own batch, invents a silly slime name, and votes on the stretchiest one.</p></div></article>
+        <article class="step"><div class="num">4</div><div><h3>Pot it and party on</h3><p>Slime goes home in a sealed tub with a sticker. Cake time is yours. Emily packs the glitter away.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <div class="wrap">
+      <h2>Party packages</h2>
+      <p class="sub">Prices in NZD for Christchurch home parties. A parent or guardian stays the whole time. Supplies included.</p>
+      <div class="packs">
+        <article class="pack">
+          <p class="who">Mini Pop</p>
+          <div class="price">$149 <span>NZD</span></div>
+          <ul>
+            <li>Up to 6 kids · 45 minutes</li>
+            <li>One recipe — classic fluffy</li>
+            <li>Aprons, bowls, take-home pots</li>
+            <li>Perfect for a lounge in Cashmere</li>
+          </ul>
+          <a class="btn" href="#book" data-pack="Mini Pop">Choose Mini Pop</a>
+        </article>
+        <article class="pack pop">
+          <div class="ribbon">Most popped</div>
+          <p class="who">Party Pop</p>
+          <div class="price">$229 <span>NZD</span></div>
+          <ul>
+            <li>Up to 10 kids · 75 minutes</li>
+            <li>Two recipes — fluffy + glitter</li>
+            <li>Name-the-slime game + certificates</li>
+            <li>The birthday classic</li>
+          </ul>
+          <a class="btn pink" href="#book" data-pack="Party Pop">Choose Party Pop</a>
+        </article>
+        <article class="pack">
+          <p class="who">Glow Goo Gala</p>
+          <div class="price">$319 <span>NZD</span></div>
+          <ul>
+            <li>Up to 14 kids · 90 minutes</li>
+            <li>Three recipes, including glow</li>
+            <li>Photo-moment backdrop + tub labels</li>
+            <li>Lights down for the glow reveal</li>
+          </ul>
+          <a class="btn lime" href="#book" data-pack="Glow Goo Gala">Choose Glow Gala</a>
+        </article>
+      </div>
+      <p class="fine" style="margin-top:14px">Add a friend for $18. Weekends and school holidays book out first — send a request early.</p>
+    </div>
+  </section>
+
+  <section id="mix">
+    <div class="wrap">
+      <h2>Mix lab</h2>
+      <p class="sub">Warm up for the party: tap colours, stir the bowl, then pop the goo bubbles before they float away.</p>
+      <div class="gallery">
+        <div class="lab">
+          <div class="swatches" id="swatches" role="group" aria-label="Slime colours"></div>
+          <div class="bowl-wrap">
+            <div class="jar" aria-hidden="true">
+              <div class="jar-fill" id="jarFill"></div>
+              <div class="jar-shine"></div>
+            </div>
+          </div>
+          <p class="hint" id="mixHint">Tap two or more colours, then stir.</p>
+          <div class="lab-actions">
+            <button class="btn pink" type="button" id="stirBtn">Stir the slime</button>
+            <button class="btn ghost" type="button" id="resetMix">Start over</button>
+          </div>
+        </div>
+        <div class="bubbles" id="bubbles">
+          <h3>Pop the goo bubbles</h3>
+          <div class="score" id="score">0 pops</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="emily">
+    <div class="wrap about">
+      <div class="emily-card">
+        <div class="avatar" aria-hidden="true">🧑‍🔬</div>
+        <h2 style="margin:0">Hi, I’m Emily</h2>
+        <p class="sub" style="margin:0">I’m 12, I live around Cracroft, and I have strong opinions about slime texture. Too sticky is a crime. Too stiff is boring. The sweet spot jiggles.</p>
+        <p style="margin:0; font-weight:700">At your party I run the workshop like a tiny lab host: welcome, recipe, mix, stretch test, stickers. Parents stay in the room. I bring washable, kid-tested recipes and I do not let glitter escape unsupervised. (It tries.)</p>
+      </div>
+      <div>
+        <h2>Where I’ll pop up</h2>
+        <p class="sub">Based in Cracroft / Cashmere. I come to homes, backyards, and small halls across Ōtautahi Christchurch.</p>
+        <div class="chips" id="subs">
+          <span class="chip">Cracroft</span>
+          <span class="chip">Cashmere</span>
+          <span class="chip">Hoon Hay</span>
+          <span class="chip">Halswell</span>
+          <span class="chip">Spreydon</span>
+          <span class="chip">Hillmorton</span>
+          <span class="chip">Riccarton</span>
+          <span class="chip">Merivale</span>
+          <span class="chip">St Albans</span>
+          <span class="chip">Sumner</span>
+          <span class="chip">Lyttelton</span>
+          <span class="chip">Rangiora by arrangement</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap" style="display:grid; gap:16px">
+      <div>
+        <h2>Book a slime party</h2>
+        <p class="sub">Tell Emily the date, the suburb, and the package. She confirms the party and what to have ready — a table, a splash mat, and excited kids.</p>
+      </div>
+      <form class="book" id="bookForm">
+        <div class="grid2">
+          <label>Parent or guardian name
+            <input name="parent" required placeholder="Alex Chen" autocomplete="name" />
+          </label>
+          <label>Birthday kid
+            <input name="kid" required placeholder="Mia" />
+          </label>
+          <label>Party date
+            <input name="date" type="date" required />
+          </label>
+          <label>Suburb
+            <input name="suburb" required placeholder="Cashmere" />
+          </label>
+          <label>Package
+            <select name="package" id="package" required>
+              <option value="Mini Pop">Mini Pop — $149</option>
+              <option value="Party Pop" selected>Party Pop — $229</option>
+              <option value="Glow Goo Gala">Glow Goo Gala — $319</option>
+            </select>
+          </label>
+          <label>How many kids
+            <input name="kids" type="number" min="4" max="16" value="8" required />
+          </label>
+        </div>
+        <label>Slime wish
+          <textarea name="note" rows="3" placeholder="Glow, extra glitter, no scents…"></textarea>
+        </label>
+        <button class="btn pink" type="submit">Send booking request</button>
+        <p class="fine">Emily replies to confirm the time. Nothing is charged until the party is confirmed. A parent or guardian stays for the whole workshop.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div style="font-family:'Baloo 2',cursive; font-size:1.6rem">Slime Pop Studio <strong>by Emily</strong></div>
+    <div>Kids’ birthday slime workshops · Cracroft, Cashmere &amp; Christchurch citywide.</div>
+    <div>Book a party above and Emily will confirm. Ages 5–12 · supplies included · take-home pots.</div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const gooColours = ["#c8ff3d","#3ad7ff","#ffe14a","#7a2bff","#ff2d8a","#ff7a3d","#7dffc3","#fff06a"];
+const splatWords = ["POP!","SPLAT!","GOO!","SQUISH!","BOING!","WOBBLE!","STRETCH!"];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const stage = document.getElementById("stage");
+const vat = document.getElementById("vat");
+const playCaption = document.getElementById("playCaption");
+const pupils = document.querySelectorAll(".pupil");
+const playthings = [...stage.querySelectorAll(".blob, .vat")];
+
+function blip(freq, dur){
+  try{
+    const ctx = blip.ctx || (blip.ctx = new (window.AudioContext || window.webkitAudioContext)());
+    if (ctx.state === "suspended") ctx.resume();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "triangle";
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.08, ctx.currentTime + .02);
+    g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + dur);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + dur + .02);
+  }catch(e){}
+}
+
+function pin(el){
+  if (el.dataset.pinned) return;
+  const br = el.getBoundingClientRect();
+  el.style.animation = "none";
+  el.style.transform = "none";
+  el.style.position = "fixed";
+  el.style.left = br.left + "px";
+  el.style.top = br.top + "px";
+  el.style.width = br.width + "px";
+  el.style.height = br.height + "px";
+  el.style.right = "auto";
+  el.style.bottom = "auto";
+  el.style.margin = "0";
+  el.dataset.pinned = "1";
+}
+
+function spawnGoo(x, y, color){
+  if (reduceMotion) return;
+  const n = 8 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < n; i++){
+    const bit = document.createElement("span");
+    bit.className = "goo-bit";
+    const s = 8 + Math.random() * 16;
+    bit.style.width = s + "px";
+    bit.style.height = s + "px";
+    bit.style.left = x + "px";
+    bit.style.top = y + "px";
+    bit.style.background = color;
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 28 + Math.random() * 78;
+    bit.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+    bit.style.setProperty("--dy", Math.sin(ang) * dist + "px");
+    stage.appendChild(bit);
+    setTimeout(() => bit.remove(), 640);
+  }
+  const word = document.createElement("span");
+  word.className = "floater";
+  word.textContent = splatWords[Math.floor(Math.random() * splatWords.length)];
+  word.style.left = x + "px";
+  word.style.top = (y - 10) + "px";
+  stage.appendChild(word);
+  setTimeout(() => word.remove(), 700);
+}
+
+function centerInStage(el){
+  const sr = stage.getBoundingClientRect();
+  const br = el.getBoundingClientRect();
+  return {
+    x: br.left - sr.left + br.width / 2,
+    y: br.top - sr.top + br.height / 2
+  };
+}
+
+function splat(el){
+  const taps = (Number(el.dataset.taps || 0) + 1);
+  el.dataset.taps = String(taps);
+  const color = gooColours[taps % gooColours.length];
+  if (el.classList.contains("vat")){
+    el.style.background =
+      "radial-gradient(circle at 30% 28%, rgba(255,255,255,.75), transparent 30%), linear-gradient(160deg, #fff, " + color + " 42%, " + gooColours[(taps + 3) % gooColours.length] + ")";
+    el.classList.add("happy");
+    setTimeout(() => el.classList.remove("happy"), 500);
+  } else {
+    el.style.background = color;
+  }
+  const c = centerInStage(el);
+  spawnGoo(c.x, c.y, color);
+  if (!reduceMotion){
+    const base = "";
+    el.animate([
+      { transform: base + "scale(1, 1)" },
+      { transform: base + "scale(1.28, .72)", offset: .35 },
+      { transform: base + "scale(.88, 1.18)", offset: .68 },
+      { transform: base + "scale(1, 1)" }
+    ], { duration: 420, easing: "cubic-bezier(.2,1.3,.3,1)" });
+  }
+  playCaption.textContent = taps % 3 === 0 ? "SPLAT! Drag it somewhere silly" : "Nice splat — tap again or drag it";
+  blip(380 + Math.random() * 420, .07);
+  if (navigator.vibrate) navigator.vibrate(12);
+}
+
+
+const roamers = playthings.map((el, i) => {
+  const br = el.getBoundingClientRect();
+  const vw = window.innerWidth || 1;
+  const vh = window.innerHeight || 1;
+  const ang = (i / playthings.length) * Math.PI * 2;
+  return {
+    el,
+    x: (br.left / vw) * 100,
+    y: (br.top / vh) * 100,
+    vx: Math.cos(ang) * (0.045 + (i % 3) * 0.012),
+    vy: Math.sin(ang) * (0.038 + (i % 4) * 0.01)
+  };
+});
+function roamTick(){
+  if (!reduceMotion){
+    const vw = window.innerWidth || 1;
+    const vh = window.innerHeight || 1;
+    roamers.forEach((r) => {
+      if (r.el.dataset.pinned) return;
+      if (drag && drag.el === r.el) return;
+      const w = r.el.offsetWidth / vw * 100;
+      const h = r.el.offsetHeight / vh * 100;
+      r.x += r.vx;
+      r.y += r.vy;
+      if (r.x < -4 || r.x > 100 - w + 4) r.vx *= -1;
+      if (r.y < -4 || r.y > 100 - h + 4) r.vy *= -1;
+      r.x = Math.max(-8, Math.min(104 - w, r.x));
+      r.y = Math.max(-8, Math.min(104 - h, r.y));
+      r.el.style.left = r.x + "%";
+      r.el.style.top = r.y + "%";
+    });
+  }
+  requestAnimationFrame(roamTick);
+}
+requestAnimationFrame(roamTick);
+
+let drag = null;
+playthings.forEach((el) => {
+  el.addEventListener("pointerdown", (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    e.preventDefault();
+    el.setPointerCapture(e.pointerId);
+    const br = el.getBoundingClientRect();
+    drag = {
+      el, id: e.pointerId,
+      ox: e.clientX - br.left,
+      oy: e.clientY - br.top,
+      sx: e.clientX, sy: e.clientY,
+      moved: false
+    };
+    stage.classList.add("grabbing");
+  });
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " "){
+      e.preventDefault();
+      splat(el);
+    }
+  });
+});
+
+window.addEventListener("pointermove", (e) => {
+  if (drag && e.pointerId === drag.id){
+    if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 8){
+      if (!drag.moved){
+        drag.moved = true;
+        pin(drag.el);
+        const br = drag.el.getBoundingClientRect();
+        drag.ox = e.clientX - br.left;
+        drag.oy = e.clientY - br.top;
+      }
+      const w = drag.el.offsetWidth;
+      const h = drag.el.offsetHeight;
+      let x = e.clientX - drag.ox;
+      let y = e.clientY - drag.oy;
+      x = Math.max(-20, Math.min(window.innerWidth - w + 20, x));
+      y = Math.max(-16, Math.min(window.innerHeight - h + 16, y));
+      drag.el.style.position = "fixed";
+      drag.el.style.left = x + "px";
+      drag.el.style.top = y + "px";
+    }
+  }
+  if (e.pointerType === "mouse"){
+    const cursor = document.getElementById("gooCursor");
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+    cursor.classList.add("on");
+    const over = !!(e.target.closest && e.target.closest(".blob, .vat"));
+    cursor.classList.toggle("big", over);
+    if (over){
+      pupils.forEach((pupil) => {
+        const r = pupil.parentElement.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        const ang = Math.atan2(dy, dx);
+        const dist = Math.min(5, Math.hypot(dx, dy) / 28);
+        pupil.style.transform = "translate(" + (Math.cos(ang) * dist) + "px," + (Math.sin(ang) * dist) + "px)";
+      });
+      if (!reduceMotion && (e.clientX + e.clientY) % 5 < 1){
+        const t = document.createElement("span");
+        t.className = "trail";
+        t.style.left = e.clientX + "px";
+        t.style.top = e.clientY + "px";
+        t.style.background = gooColours[(Math.round(e.clientX) + Math.round(e.clientY)) % gooColours.length];
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 460);
+      }
+    }
+  }
+});
+
+window.addEventListener("pointerup", (e) => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const el = drag.el;
+  const moved = drag.moved;
+  drag = null;
+  stage.classList.remove("grabbing");
+  if (!moved) splat(el);
+  else {
+    playCaption.textContent = "Parked! Tap it to change colour";
+    blip(220, .05);
+  }
+});
+window.addEventListener("pointercancel", () => {
+  drag = null;
+  stage.classList.remove("grabbing");
+});
+
+const colours = [
+  { name:"Bubblegum", hex:"#ff4f9a" },
+  { name:"Lime zap", hex:"#c8ff3d" },
+  { name:"Ocean pop", hex:"#3ad7ff" },
+  { name:"Grape fizz", hex:"#7a2bff" },
+  { name:"Sunshine", hex:"#ffe14a" },
+  { name:"Cotton", hex:"#fff6fb" }
+];
+const picked = new Set();
+const swatches = document.getElementById("swatches");
+const mix = document.getElementById("jarFill");
+const hint = document.getElementById("mixHint");
+colours.forEach((c, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "swatch";
+  b.style.background = c.hex;
+  b.setAttribute("aria-label", c.name);
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => {
+    if (picked.has(i)) { picked.delete(i); b.classList.remove("on"); b.setAttribute("aria-pressed","false"); }
+    else { picked.add(i); b.classList.add("on"); b.setAttribute("aria-pressed","true"); }
+    paint();
+  });
+  swatches.appendChild(b);
+});
+function hexToRgb(h){
+  const n = parseInt(h.slice(1), 16);
+  return [(n>>16)&255, (n>>8)&255, n&255];
+}
+function paint(){
+  if (!mix) return;
+  if (!picked.size){
+    mix.style.background = "#ffd0e6";
+    mix.style.height = "62%";
+    hint.textContent = "Tap two or more colours, then stir.";
+    return;
+  }
+  let r=0,g=0,b=0;
+  const names = [];
+  picked.forEach(i => {
+    const rgb = hexToRgb(colours[i].hex);
+    r += rgb[0]; g += rgb[1]; b += rgb[2];
+    names.push(colours[i].name);
+  });
+  const n = picked.size;
+  mix.style.background = "rgb(" + Math.round(r/n) + "," + Math.round(g/n) + "," + Math.round(b/n) + ")";
+  mix.style.height = Math.min(86, 58 + n * 8) + "%";
+  hint.textContent = names.join(" + ") + (n > 1 ? " — looks wildly stretchy." : " — add another colour.");
+}
+document.getElementById("stirBtn").addEventListener("click", () => {
+  mix.classList.remove("spin");
+  void mix.offsetWidth;
+  mix.classList.add("spin");
+  blip(520, .06);
+  if (picked.size > 1) hint.textContent = hint.textContent.replace("looks wildly stretchy.", "STIRRED. Name it something ridiculous.");
+});
+document.getElementById("resetMix").addEventListener("click", () => {
+  picked.clear();
+  swatches.querySelectorAll(".swatch").forEach(el => { el.classList.remove("on"); el.setAttribute("aria-pressed","false"); });
+  paint();
+});
+
+const field = document.getElementById("bubbles");
+const scoreEl = document.getElementById("score");
+let pops = 0;
+function spawn(){
+  const el = document.createElement("button");
+  el.type = "button";
+  el.className = "bubble";
+  el.setAttribute("aria-label", "Pop bubble");
+  const size = 44 + Math.random()*52;
+  el.style.width = size + "px";
+  el.style.height = size + "px";
+  el.style.left = Math.random()*78 + "%";
+  el.style.bottom = "-60px";
+  el.style.animationDuration = (4 + Math.random()*4) + "s";
+  el.addEventListener("click", () => {
+    el.classList.add("popped");
+    pops += 1;
+    scoreEl.textContent = pops + (pops === 1 ? " pop" : " pops");
+    blip(340 + Math.random()*280, .05);
+    setTimeout(() => el.remove(), 220);
+  });
+  el.addEventListener("animationend", () => el.remove());
+  field.appendChild(el);
+}
+setInterval(spawn, 700);
+for (let i=0;i<5;i++) spawn();
+
+document.querySelectorAll("[data-pack]").forEach(a => {
+  a.addEventListener("click", () => {
+    document.getElementById("package").value = a.getAttribute("data-pack");
+  });
+});
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+menuBtn.addEventListener("click", () => {
+  const open = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+});
+navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  navLinks.classList.remove("open");
+  menuBtn.setAttribute("aria-expanded", "false");
+}));
+
+const toast = document.getElementById("toast");
+let toastTimer;
+document.getElementById("bookForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const kid = data.get("kid");
+  const pack = data.get("package");
+  const suburb = data.get("suburb");
+  const when = data.get("date");
+  toast.textContent = "Booking request received for " + kid + "’s " + pack + " in " + suburb + (when ? " on " + when : "") + ". Emily will confirm the party.";
+  toast.classList.add("show");
+  blip(660, .08);
+  setTimeout(() => blip(880, .1), 90);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 4800);
+  e.target.reset();
+  document.getElementById("package").value = pack;
+});
+</script>
+</body>
+</html>
