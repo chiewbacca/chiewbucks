@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ChiewBucks</title>
+<style>body{margin:0;background:#006241;color:#fff;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh}p{opacity:.85}</style>
+</head>
+<body>
+<p>Pouring ChiewBucks…</p>
+<script>
+(async () => {
+  const names = ["p00.b64","p01.b64","p02.b64","p03.b64"];
+  const chunks = [];
+  for (const name of names) {
+    const res = await fetch("parts/" + name);
+    if (!res.ok) throw new Error("missing " + name);
+    const b64 = (await res.text()).replace(/\s/g, "");
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    chunks.push(bytes);
+  }
+  const total = chunks.reduce((n, c) => n + c.length, 0);
+  const all = new Uint8Array(total);
+  let off = 0;
+  for (const c of chunks) { all.set(c, off); off += c.length; }
+  const html = new TextDecoder().decode(all);
+  document.open();
+  document.write(html);
+  document.close();
+})().catch((err) => {
+  document.body.innerHTML = "<p>Could not load the store.</p><pre>" + err + "</pre>";
+});
+</script>
+</body>
+</html>
