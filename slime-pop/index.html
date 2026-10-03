@@ -80,7 +80,7 @@ button,input,select,textarea{font:inherit}
 .btn.ghost{background:#fff; color:var(--ink); box-shadow:0 8px 0 #f3c3dc}
 .menu-btn{display:none; border:0; background:#fff; border-radius:14px; padding:10px 12px; font-weight:800; box-shadow:0 4px 0 #f3c3dc}
 
-.hero{position:relative; padding:28px 0 20px}
+.hero{position:relative; padding:28px 0 10px; z-index:1}
 .hero-grid{display:grid; gap:28px; align-items:center}
 .kicker{
   display:inline-flex; align-items:center; gap:8px;
@@ -107,62 +107,56 @@ h1 .goo{
 .pill{background:#fff; border-radius:999px; padding:8px 12px; font-weight:800; font-size:.85rem; box-shadow:0 6px 0 rgba(42,16,56,.06)}
 
 .stage{
-  position:relative;
-  min-height:460px;
-  border-radius:36px;
-  background:
-    radial-gradient(circle at 50% 58%, rgba(255,255,255,.55), transparent 42%),
-    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,210,234,.25));
-  overflow:hidden;
-  touch-action:pan-y;
+  position:fixed;
+  inset:0;
+  z-index:25;
+  pointer-events:none;
+  overflow:visible;
+  background:none;
+  border:0;
+  border-radius:0;
+  touch-action:none;
   user-select:none;
   -webkit-user-select:none;
 }
-.stage.hot{background:
-  radial-gradient(circle at var(--hx,50%) var(--hy,50%), rgba(255,255,255,.8), transparent 18%),
-  linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,210,234,.35));
-}
 .play-caption{
-  position:absolute; left:12px; right:12px; bottom:10px; z-index:6;
-  margin:0; text-align:center;
+  margin:14px 0 0;
   font-family:"Baloo 2",cursive; font-weight:700; font-size:1rem;
   color:var(--ink);
-  background:rgba(255,255,255,.82);
-  border-radius:999px; padding:8px 12px;
-  pointer-events:none;
 }
 .vat{
   position:absolute;
-  width:min(280px, 68%);
+  width:min(240px, 42vw);
   aspect-ratio:1;
-  left:50%; top:48%;
-  transform:translate(-50%, -50%);
+  left:58%; top:18%;
   border-radius:46% 54% 48% 52% / 42% 46% 54% 58%;
   background:
     radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), transparent 28%),
     linear-gradient(160deg, #ff4fa0, #ff2d8a 40%, #b14bff 78%);
-  box-shadow:inset 0 -30px 40px rgba(80,0,60,.25), 0 24px 0 rgba(42,16,56,.08), var(--shadow);
+  box-shadow:inset 0 -30px 40px rgba(80,0,60,.25), 0 18px 28px rgba(42,16,56,.16);
   animation:morph 7s ease-in-out infinite;
   z-index:2;
   touch-action:none;
   cursor:grab;
+  pointer-events:auto;
 }
 .blob{
   position:absolute; border-radius:50%;
   z-index:3;
   touch-action:none;
   cursor:grab;
-  box-shadow:inset 0 -10px 16px rgba(42,16,56,.12), 0 10px 0 rgba(42,16,56,.06);
-  animation:float 6s ease-in-out infinite;
+  pointer-events:auto;
+  box-shadow:inset 0 -10px 16px rgba(42,16,56,.12), 0 12px 22px rgba(42,16,56,.14);
+  animation:morph 8s ease-in-out infinite;
 }
 .blob:focus-visible,.vat:focus-visible{outline:3px solid var(--ink); outline-offset:4px}
 .stage.grabbing .blob,.stage.grabbing .vat{cursor:grabbing}
-.b1{width:118px; height:108px; background:#c8ff3d; left:7%; top:16%; animation-delay:-1s}
-.b2{width:92px; height:92px; background:#3ad7ff; left:72%; top:20%; animation-delay:-2.2s}
-.b3{width:78px; height:84px; background:#ffe14a; left:14%; top:64%; animation-delay:-.6s}
-.b4{width:70px; height:70px; background:#7a2bff; left:70%; top:66%; animation-delay:-3s}
-.b5{width:58px; height:62px; background:#ff7a3d; left:40%; top:10%; animation-delay:-1.6s}
-.b6{width:52px; height:52px; background:#7dffc3; left:46%; top:74%; animation-delay:-2.8s}
+.b1{width:118px; height:108px; background:#c8ff3d; left:6%; top:12%; animation-delay:-1s}
+.b2{width:92px; height:92px; background:#3ad7ff; left:78%; top:8%; animation-delay:-2.2s}
+.b3{width:78px; height:84px; background:#ffe14a; left:8%; top:62%; animation-delay:-.6s}
+.b4{width:70px; height:70px; background:#7a2bff; left:82%; top:70%; animation-delay:-3s}
+.b5{width:58px; height:62px; background:#ff7a3d; left:42%; top:78%; animation-delay:-1.6s}
+.b6{width:52px; height:52px; background:#7dffc3; left:30%; top:38%; animation-delay:-2.8s}
 .face{position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:2}
 .eyes{display:flex; gap:36px}
 .eye{width:22px; height:26px; background:#2a1038; border-radius:50%; position:relative; animation:blink 4.5s infinite; display:block}
@@ -170,7 +164,7 @@ h1 .goo{
 .smile{width:54px; height:22px; border:5px solid #2a1038; border-top:0; border-radius:0 0 40px 40px; margin:10px auto 0; transition:transform .2s ease}
 .vat.happy .smile{transform:scaleX(1.25) translateY(2px)}
 .drip{
-  position:absolute; top:-8px; left:50%; width:18px; height:70px; margin-left:-9px;
+  position:absolute; top:-36px; left:50%; width:18px; height:70px; margin-left:-9px;
   background:linear-gradient(#ff7ab8, #ff2d8a);
   border-radius:0 0 20px 20px;
   animation:drip 2.8s ease-in-out infinite;
@@ -265,21 +259,33 @@ h2{font-family:"Baloo 2",cursive; font-size:clamp(2rem,5vw,3.2rem); line-height:
   background:#fff; border-radius:32px; padding:18px; box-shadow:var(--shadow);
   display:grid; gap:14px;
 }
-.bowl-wrap{display:grid; place-items:center; min-height:220px; position:relative}
-.bowl{
-  width:180px; height:140px; border-radius:20px 20px 90px 90px;
-  background:#f4e7f1; box-shadow:inset 0 -20px 0 rgba(42,16,56,.05), 0 16px 0 rgba(42,16,56,.06);
-  overflow:hidden; position:relative;
+.bowl-wrap{display:grid; place-items:center; min-height:240px; position:relative}
+.jar{
+  width:132px; height:188px; position:relative;
+  border-radius:16px 16px 36px 36px;
+  background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.55));
+  border:4px solid #fff;
+  box-shadow:inset 0 0 0 3px rgba(42,16,56,.08), 0 16px 0 rgba(42,16,56,.08), var(--shadow);
+  overflow:visible;
 }
-.mix{
-  position:absolute; left:-10%; right:-10%; bottom:-20%; height:80%;
-  border-radius:40% 40% 0 0;
+.jar:before{
+  content:""; position:absolute; top:-18px; left:28px; right:28px; height:22px;
+  border-radius:10px 10px 4px 4px;
+  background:#fff; box-shadow:0 4px 0 rgba(42,16,56,.08); z-index:3;
+}
+.jar-fill{
+  position:absolute; left:6px; right:6px; bottom:6px; height:62%;
+  border-radius:30% 36% 26px 26px;
   background:#ffd0e6;
   transform-origin:50% 80%;
-  transition:background .35s ease;
-  animation:stir 1.2s ease;
+  transition:background .35s ease, height .35s ease;
+  z-index:1;
 }
-.mix.spin{animation:stir .7s ease}
+.jar-fill.spin{animation:stir .7s ease}
+.jar-shine{
+  position:absolute; inset:8px auto auto 10px; width:16px; height:46%;
+  border-radius:20px; background:rgba(255,255,255,.55); z-index:2; pointer-events:none;
+}
 .lab-actions{display:flex; gap:10px; flex-wrap:wrap}
 .hint{font-weight:800; color:var(--muted); min-height:1.4em}
 
@@ -344,7 +350,7 @@ footer{padding:28px 0 48px; color:var(--muted); font-weight:700}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 @media (min-width:860px){
-  .hero-grid{grid-template-columns:1.05fr .95fr; padding-top:18px}
+  .hero-grid{grid-template-columns:minmax(0, 680px); padding-top:18px}
   .steps{grid-template-columns:1fr 1fr}
   .packs{grid-template-columns:repeat(3,1fr); align-items:stretch}
   .gallery{grid-template-columns:1.1fr .9fr}
@@ -361,10 +367,10 @@ footer{padding:28px 0 48px; color:var(--muted); font-weight:700}
   }
   .nav-links.open{display:flex}
   .nav .btn{width:100%}
-  .stage{min-height:420px}
-  .b1{width:104px; height:96px}
-  .b2{width:86px; height:86px}
-  .b5{width:64px; height:64px}
+  .vat{width:min(200px, 46vw)}
+  .b1{width:96px; height:88px}
+  .b2{width:78px; height:78px}
+  .b5{width:56px; height:56px}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none !important; transition:none !important}
@@ -398,6 +404,23 @@ footer{padding:28px 0 48px; color:var(--muted); font-weight:700}
   </filter>
 </svg>
 <div class="goo-cursor" id="gooCursor" aria-hidden="true"></div>
+<div class="stage" id="stage">
+  <div class="blob b1" tabindex="0" role="button" aria-label="Lime slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b2" tabindex="0" role="button" aria-label="Aqua slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b3" tabindex="0" role="button" aria-label="Sunshine slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b4" tabindex="0" role="button" aria-label="Grape slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b5" tabindex="0" role="button" aria-label="Orange slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="blob b6" tabindex="0" role="button" aria-label="Mint slime blob. Tap to splat and change colour. Drag to move it."></div>
+  <div class="vat" id="vat" tabindex="0" role="button" aria-label="Big pink slime. Tap to bounce, splat, and change colour. Drag to squish it around.">
+    <div class="drip" aria-hidden="true"></div>
+    <div class="face" aria-hidden="true">
+      <div>
+        <div class="eyes"><i class="eye"><i class="pupil"></i></i><i class="eye"><i class="pupil"></i></i></div>
+        <div class="smile"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <header class="nav">
   <a class="brand" href="#top"><span class="logo" aria-hidden="true"><span></span></span> Slime Pop Studio</a>
@@ -428,24 +451,7 @@ footer{padding:28px 0 48px; color:var(--muted); font-weight:700}
           <span class="pill">Citywide home visits</span>
           <span class="pill">Take-home pots</span>
         </div>
-      </div>
-      <div class="stage" id="stage">
-        <div class="drip" aria-hidden="true"></div>
-        <div class="blob b1" tabindex="0" role="button" aria-label="Lime slime blob. Tap to splat and change colour. Drag to move it."></div>
-        <div class="blob b2" tabindex="0" role="button" aria-label="Aqua slime blob. Tap to splat and change colour. Drag to move it."></div>
-        <div class="blob b3" tabindex="0" role="button" aria-label="Sunshine slime blob. Tap to splat and change colour. Drag to move it."></div>
-        <div class="blob b4" tabindex="0" role="button" aria-label="Grape slime blob. Tap to splat and change colour. Drag to move it."></div>
-        <div class="blob b5" tabindex="0" role="button" aria-label="Orange slime blob. Tap to splat and change colour. Drag to move it."></div>
-        <div class="blob b6" tabindex="0" role="button" aria-label="Mint slime blob. Tap to splat and change colour. Drag to move it."></div>
-        <div class="vat" id="vat" tabindex="0" role="button" aria-label="Big pink slime. Tap to bounce, splat, and change colour. Drag to squish it around.">
-          <div class="face" aria-hidden="true">
-            <div>
-              <div class="eyes"><i class="eye"><i class="pupil"></i></i><i class="eye"><i class="pupil"></i></i></div>
-              <div class="smile"></div>
-            </div>
-          </div>
-        </div>
-        <p class="play-caption" id="playCaption">Tap to splat · drag the blobs around</p>
+        <p class="play-caption" id="playCaption">Blobs roam the whole page — tap to splat, drag them anywhere</p>
       </div>
     </div>
     <div class="marquee" aria-hidden="true">
@@ -521,7 +527,10 @@ footer{padding:28px 0 48px; color:var(--muted); font-weight:700}
         <div class="lab">
           <div class="swatches" id="swatches" role="group" aria-label="Slime colours"></div>
           <div class="bowl-wrap">
-            <div class="bowl" aria-hidden="true"><div class="mix" id="mix"></div></div>
+            <div class="jar" aria-hidden="true">
+              <div class="jar-fill" id="jarFill"></div>
+              <div class="jar-shine"></div>
+            </div>
           </div>
           <p class="hint" id="mixHint">Tap two or more colours, then stir.</p>
           <div class="lab-actions">
@@ -644,13 +653,12 @@ function blip(freq, dur){
 
 function pin(el){
   if (el.dataset.pinned) return;
-  const sr = stage.getBoundingClientRect();
   const br = el.getBoundingClientRect();
   el.style.animation = "none";
   el.style.transform = "none";
-  el.style.position = "absolute";
-  el.style.left = (br.left - sr.left) + "px";
-  el.style.top = (br.top - sr.top) + "px";
+  el.style.position = "fixed";
+  el.style.left = br.left + "px";
+  el.style.top = br.top + "px";
   el.style.width = br.width + "px";
   el.style.height = br.height + "px";
   el.style.right = "auto";
@@ -711,7 +719,7 @@ function splat(el){
   const c = centerInStage(el);
   spawnGoo(c.x, c.y, color);
   if (!reduceMotion){
-    const base = el.dataset.pinned ? "" : (el.classList.contains("vat") ? "translate(-50%, -50%) " : "");
+    const base = "";
     el.animate([
       { transform: base + "scale(1, 1)" },
       { transform: base + "scale(1.28, .72)", offset: .35 },
@@ -723,6 +731,43 @@ function splat(el){
   blip(380 + Math.random() * 420, .07);
   if (navigator.vibrate) navigator.vibrate(12);
 }
+
+
+const roamers = playthings.map((el, i) => {
+  const br = el.getBoundingClientRect();
+  const vw = window.innerWidth || 1;
+  const vh = window.innerHeight || 1;
+  const ang = (i / playthings.length) * Math.PI * 2;
+  return {
+    el,
+    x: (br.left / vw) * 100,
+    y: (br.top / vh) * 100,
+    vx: Math.cos(ang) * (0.045 + (i % 3) * 0.012),
+    vy: Math.sin(ang) * (0.038 + (i % 4) * 0.01)
+  };
+});
+function roamTick(){
+  if (!reduceMotion){
+    const vw = window.innerWidth || 1;
+    const vh = window.innerHeight || 1;
+    roamers.forEach((r) => {
+      if (r.el.dataset.pinned) return;
+      if (drag && drag.el === r.el) return;
+      const w = r.el.offsetWidth / vw * 100;
+      const h = r.el.offsetHeight / vh * 100;
+      r.x += r.vx;
+      r.y += r.vy;
+      if (r.x < -4 || r.x > 100 - w + 4) r.vx *= -1;
+      if (r.y < -4 || r.y > 100 - h + 4) r.vy *= -1;
+      r.x = Math.max(-8, Math.min(104 - w, r.x));
+      r.y = Math.max(-8, Math.min(104 - h, r.y));
+      r.el.style.left = r.x + "%";
+      r.el.style.top = r.y + "%";
+    });
+  }
+  requestAnimationFrame(roamTick);
+}
+requestAnimationFrame(roamTick);
 
 let drag = null;
 playthings.forEach((el) => {
@@ -758,13 +803,13 @@ window.addEventListener("pointermove", (e) => {
         drag.ox = e.clientX - br.left;
         drag.oy = e.clientY - br.top;
       }
-      const sr = stage.getBoundingClientRect();
       const w = drag.el.offsetWidth;
       const h = drag.el.offsetHeight;
-      let x = e.clientX - sr.left - drag.ox;
-      let y = e.clientY - sr.top - drag.oy;
-      x = Math.max(-12, Math.min(sr.width - w + 12, x));
-      y = Math.max(-8, Math.min(sr.height - h - 36, y));
+      let x = e.clientX - drag.ox;
+      let y = e.clientY - drag.oy;
+      x = Math.max(-20, Math.min(window.innerWidth - w + 20, x));
+      y = Math.max(-16, Math.min(window.innerHeight - h + 16, y));
+      drag.el.style.position = "fixed";
       drag.el.style.left = x + "px";
       drag.el.style.top = y + "px";
     }
@@ -774,13 +819,9 @@ window.addEventListener("pointermove", (e) => {
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
     cursor.classList.add("on");
-    const over = stage.contains(e.target);
+    const over = !!(e.target.closest && e.target.closest(".blob, .vat"));
     cursor.classList.toggle("big", over);
-    const sr = stage.getBoundingClientRect();
     if (over){
-      stage.classList.add("hot");
-      stage.style.setProperty("--hx", ((e.clientX - sr.left) / sr.width * 100) + "%");
-      stage.style.setProperty("--hy", ((e.clientY - sr.top) / sr.height * 100) + "%");
       pupils.forEach((pupil) => {
         const r = pupil.parentElement.getBoundingClientRect();
         const dx = e.clientX - (r.left + r.width / 2);
@@ -798,8 +839,6 @@ window.addEventListener("pointermove", (e) => {
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 460);
       }
-    } else {
-      stage.classList.remove("hot");
     }
   }
 });
@@ -831,7 +870,7 @@ const colours = [
 ];
 const picked = new Set();
 const swatches = document.getElementById("swatches");
-const mix = document.getElementById("mix");
+const mix = document.getElementById("jarFill");
 const hint = document.getElementById("mixHint");
 colours.forEach((c, i) => {
   const b = document.createElement("button");
@@ -852,8 +891,10 @@ function hexToRgb(h){
   return [(n>>16)&255, (n>>8)&255, n&255];
 }
 function paint(){
+  if (!mix) return;
   if (!picked.size){
     mix.style.background = "#ffd0e6";
+    mix.style.height = "62%";
     hint.textContent = "Tap two or more colours, then stir.";
     return;
   }
@@ -866,6 +907,7 @@ function paint(){
   });
   const n = picked.size;
   mix.style.background = "rgb(" + Math.round(r/n) + "," + Math.round(g/n) + "," + Math.round(b/n) + ")";
+  mix.style.height = Math.min(86, 58 + n * 8) + "%";
   hint.textContent = names.join(" + ") + (n > 1 ? " — looks wildly stretchy." : " — add another colour.");
 }
 document.getElementById("stirBtn").addEventListener("click", () => {
