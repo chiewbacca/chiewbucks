@@ -12,41 +12,23 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Assemble single-page site
-        id: assemble
+      - uses: actions/checkout@v4
+      - name: Prepare site
         run: |
-          count=$(ls parts/p*.b64 2>/dev/null | wc -l)
-          echo "count=$count" >> "$GITHUB_OUTPUT"
-          if [ "$count" -ne 12 ]; then
-            echo "Have $count/12 slices; skipping deploy"
-            exit 0
-          fi
           mkdir -p _site
-          for f in parts/p0*.b64 parts/p1*.b64; do
-            base64 -d "$f"
-          done > _site/index.html
-          cp README.md _site/README.md || true
+          cp index.html _site/index.html
           : > _site/.nojekyll
-          test "$(wc -c < _site/index.html)" -eq 143696
-          grep -q ChiewBucks _site/index.html
-      - name: Upload Pages artifact
-        if: steps.assemble.outputs.count == '12'
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-      - name: Deploy to GitHub Pages
-        if: steps.assemble.outputs.count == '12'
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
