@@ -1,0 +1,148 @@
+x 28px 0 0;
+  box-shadow: 0 -24px 70px rgba(0,0,0,0.28);
+  transform: translate(-50%, 110%);
+  transition: transform 0.42s cubic-bezier(.16,1,.3,1), opacity 0.3s;
+  max-height: 92vh; overflow: auto;
+}
+.modal.open { transform: translate(-50%, 0); }
+@media (min-width: 720px) {
+  .modal {
+    top: 50%; bottom: auto; border-radius: 28px;
+    transform: translate(-50%, -46%) scale(0.94); opacity: 0;
+    max-height: 86vh;
+  }
+  .modal.open { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.modal-img { aspect-ratio: 16/10; overflow: hidden; background: #0b7a4b; position: relative; }
+.modal-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); }
+.modal-close {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%; border: none;
+  background: rgba(255,255,255,0.94); color: var(--ink); font-size: 1.35rem; cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.16);
+}
+.modal-body { padding: 18px 18px 26px; }
+.modal-body h3 { font-family: "Fraunces", Georgia, serif; font-size: 1.7rem; color: var(--green-deep); margin-bottom: 6px; }
+.modal-desc { color: var(--muted); margin-bottom: 16px; }
+.size-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.size {
+  flex: 1; border: 2px solid rgba(0,98,65,0.1); background: white;
+  border-radius: 16px; padding: 12px 6px; cursor: pointer; text-align: center;
+  font-weight: 800; font-size: 0.86rem; color: var(--muted);
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+}
+.size small { display: block; font-weight: 600; font-size: 0.7rem; opacity: 0.75; margin-top: 2px; }
+.size.active { border-color: var(--green); color: var(--green); background: rgba(0,98,65,0.06); transform: translateY(-2px); }
+.modal-actions { display: flex; gap: 10px; align-items: center; }
+.qty {
+  display: flex; align-items: center; gap: 8px;
+  background: white; border-radius: 999px; padding: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0,98,65,0.08);
+}
+.qty button {
+  width: 40px; height: 40px; border: none; border-radius: 50%;
+  background: var(--cream); color: var(--green); font-size: 1.25rem; font-weight: 800; cursor: pointer;
+}
+.qty span { font-weight: 800; min-width: 18px; text-align: center; }
+.btn-add { flex: 1; }
+
+.cart-drawer {
+  position: fixed; top: 0; right: 0; z-index: 90;
+  width: min(420px, 100%); height: 100%;
+  background: linear-gradient(180deg, #fffdf9, #f6f0e4);
+  transform: translateX(105%);
+  transition: transform 0.42s cubic-bezier(.16,1,.3,1);
+  display: flex; flex-direction: column;
+  box-shadow: -18px 0 50px rgba(0,0,0,0.18);
+}
+.cart-drawer.open { transform: translateX(0); }
+.cart-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 16px 12px; border-bottom: 1px solid rgba(0,98,65,0.08);
+}
+.cart-head h3 { font-family: "Fraunces", Georgia, serif; color: var(--green-deep); font-size: 1.4rem; }
+.cart-items { flex: 1; overflow: auto; padding: 8px 16px 16px; }
+.cart-empty { text-align: center; color: var(--muted); padding: 48px 12px; font-size: 1rem; }
+.cart-line {
+  display: grid; grid-template-columns: 68px 1fr auto; gap: 12px; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid rgba(0,98,65,0.08);
+  animation: rise 0.35s ease both;
+}
+.cart-line img { width: 68px; height: 68px; object-fit: cover; border-radius: 16px; }
+.cart-line h4 { font-size: 0.95rem; }
+.cart-line p { font-size: 0.78rem; color: var(--muted); }
+.cart-line .rm { border: none; background: none; color: #a33b3b; font-size: 0.78rem; cursor: pointer; font-weight: 700; padding: 6px 0; }
+.cart-foot { padding: 14px 16px calc(18px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(0,98,65,0.08); }
+.cart-total { display: flex; justify-content: space-between; font-weight: 800; font-size: 1.15rem; margin-bottom: 12px; color: var(--green-deep); }
+.toast {
+  position: fixed; left: 50%; bottom: 96px; z-index: 120;
+  transform: translateX(-50%) translateY(16px); opacity: 0;
+  background: var(--green-deep); color: white; font-weight: 750; font-weight: 700;
+  padding: 12px 18px; border-radius: 999px; pointer-events: none;
+  transition: opacity 0.28s, transform 0.28s; white-space: nowrap; max-width: calc(100% - 32px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  border: 1px solid rgba(243,222,170,0.35);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.confetti-piece {
+  position: fixed; z-index: 130; width: 9px; height: 14px; border-radius: 2px;
+  pointer-events: none; animation: confettiPop 1.05s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.confetti-piece.star { width: 14px; height: 14px; background: transparent !important; font-size: 14px; }
+@keyframes confettiPop {
+  0% { transform: translate(0, 0) rotate(0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(520deg) scale(0.7); opacity: 0; }
+}
+
+.dock {
+  position: fixed; left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 50; display: flex; gap: 4px; padding: 8px;
+  background: rgba(255,252,247,0.92); backdrop-filter: blur(16px);
+  border-radius: 22px; box-shadow: 0 14px 40px rgba(0,40,25,0.18);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+@media (min-width: 760px) { .dock { display: none; } .footer { padding-bottom: 40px; } }
+.dock a, .dock button {
+  flex: 1; border: none; background: transparent; text-decoration: none;
+  color: var(--muted); font-weight: 800; font-size: 0.72rem;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  cursor: pointer; padding: 8px 4px; border-radius: 14px; min-height: 52px;
+}
+.dock a:hover, .dock button:hover, .dock .on { color: var(--green); background: rgba(0,98,65,0.06); }
+.dock .ico { font-size: 1.15rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .card { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="mesh" aria-hidden="true">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+<div class="beans" id="beans" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="#top">
+    <span class="logo-wrap"><img src="" id="brandLogo" alt="ChiewBucks logo" width="40" height="40" /></span>
+    ChiewBucks
+  </a>
+  <div class="nav-actions">
+    <a class="nav-link" href="#menu">Menu</a>
+    <a class="nav-link" href="#game">Play</a>
+    <a class="nav-link" href="#rewards">Rewards</a>
+    <button class="cart-btn" id="openCart" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.2 14h9.5c.8 0 1.5-.5 1.7-1.3L21 5H5.2L4.3 2H1v2h2l3.6 7.6L5.2 14c-.4.8.2 1.8 1.1 1.8H19v-2H7.4l.8-1.5z"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<main id
