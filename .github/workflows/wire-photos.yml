@@ -1,0 +1,74 @@
+name: Wire drink photos
+
+on:
+  push:
+    paths:
+      - .github/workflows/wire-photos.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  wire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch index and sunny b64
+        run: |
+          python3 << 'PY'
+          from pathlib import Path
+          sunny = Path('img-b64/sunny-citrus.b64')
+          if sunny.exists():
+              t = sunny.read_text()
+              bad = '0usPIgnp+3y4/KHO/8LCVZZXUhC129'
+              good = '0usPIgnp+3y4/KHI/8LCVZZXUhC129'
+              if bad in t:
+                  sunny.write_text(t.replace(bad, good, 1))
+                  print('fixed sunny char')
+              else:
+                  print('sunny already exact')
+          p = Path('index.html')
+          html = p.read_text()
+          if 'id="photoLoader"' in html:
+              print('index already patched')
+          else:
+              snippet = """<script id=\"photoLoader\">
+          (async function () {
+            const base = 'https://raw.githubusercontent.com/chiewbacca/chiewbucks/main/img-b64/';
+            const names = ['logo','caramel-cloud','matcha-mist','choco-blizzard','berry-breeze','vanilla-orbit','sunny-citrus'];
+            const map = {};
+            await Promise.all(names.map(async (n) => {
+              const res = await fetch(base + n + '.b64');
+              if (!res.ok) throw new Error(n + ' ' + res.status);
+              const t = (await res.text()).trim();
+              map['img/' + n + '.webp'] = 'data:image/webp;base64,' + t;
+            }));
+            document.querySelectorAll('img').forEach((img) => {
+              const key = img.getAttribute('src');
+              if (map[key]) img.src = map[key];
+            });
+            if (typeof DRINKS !== 'undefined') {
+              DRINKS.forEach((d) => { if (map[d.img]) d.img = map[d.img]; });
+            }
+            if (typeof renderMenu === 'function') renderMenu();
+            if (typeof renderCart === 'function') renderCart();
+          })().catch((e) => console.error('ChiewBucks photos', e));
+          </script>
+          """
+              if '</body>' not in html:
+                  raise SystemExit('no body close')
+              p.write_text(html.replace('</body>', snippet + '\n</body>', 1))
+              print('patched index')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "Alan Chiew"
+          git config user.email "63699522+chiewbacca@users.noreply.github.com"
+          git add index.html img-b64/sunny-citrus.b64
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "Fix drink photos via raw b64 fetch"
+            git push
+          fi
