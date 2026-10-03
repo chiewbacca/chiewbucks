@@ -876,5 +876,28 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") { closeModal(); closeCart(); }
 });
 </script>
+<script id="photoLoader">
+(async function () {
+  const base = 'https://raw.githubusercontent.com/chiewbacca/chiewbucks/main/img-b64/';
+  const names = ['logo','caramel-cloud','matcha-mist','choco-blizzard','berry-breeze','vanilla-orbit','sunny-citrus'];
+  const map = {};
+  await Promise.all(names.map(async (n) => {
+    const res = await fetch(base + n + '.b64');
+    if (!res.ok) throw new Error(n + ' ' + res.status);
+    const t = (await res.text()).trim();
+    map['img/' + n + '.webp'] = 'data:image/webp;base64,' + t;
+  }));
+  document.querySelectorAll('img').forEach((img) => {
+    const key = img.getAttribute('src');
+    if (map[key]) img.src = map[key];
+  });
+  if (typeof DRINKS !== 'undefined') {
+    DRINKS.forEach((d) => { if (map[d.img]) d.img = map[d.img]; });
+  }
+  if (typeof renderMenu === 'function') renderMenu();
+  if (typeof renderCart === 'function') renderCart();
+})().catch((e) => console.error('ChiewBucks photos', e));
+</script>
+
 </body>
 </html>
